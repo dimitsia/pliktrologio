@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Μαθαίνω το Πληκτρολόγιο | 14 Ασκήσεις</title>
+<style>
+:root{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:#173052;background:#f3f8ff}*{box-sizing:border-box}body{margin:0}header{background:linear-gradient(115deg,#2864df,#8a55d7);color:white;padding:44px 22px;text-align:center}header h1{font-size:clamp(2rem,4vw,3.3rem);margin:0 0 10px}header p{font-size:1.2rem;margin:0;opacity:.95}.wrap{max-width:1160px;margin:auto;padding:30px 20px 55px}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;margin-bottom:22px}.toolbar strong{font-size:1.2rem}input{border:2px solid #d5e2fa;border-radius:14px;padding:13px 17px;font:inherit;font-size:1.05rem;width:min(100%,330px)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:19px}.card{background:#fff;border:1px solid #e0e9fa;border-radius:20px;padding:22px;box-shadow:0 6px 18px #224f9610;display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s}.card:hover{transform:translateY(-4px);box-shadow:0 12px 24px #224f9620}.top{display:flex;justify-content:space-between;align-items:center}.number{background:#e9f0ff;color:#2359c8;border-radius:10px;padding:7px 11px;font-weight:800}.emoji{font-size:2.3rem}.card h2{font-size:1.35rem;margin:18px 0 8px}.card p{color:#536781;line-height:1.5;margin:0 0 20px;flex:1}.card a{display:block;text-align:center;background:#2763df;color:white;text-decoration:none;padding:13px;border-radius:12px;font-size:1.08rem;font-weight:750}.card a:hover,.card a:focus-visible{background:#1648b5}footer{text-align:center;color:#63758f;padding:20px}#empty{display:none;text-align:center;padding:25px}@media(max-width:540px){header{padding:32px 18px}.wrap{padding:22px 15px}.grid{grid-template-columns:1fr}}
+
+.practice{display:none;max-width:850px;margin:30px auto;padding:28px;background:#fff;border:2px solid #dce8ff;border-radius:22px;box-shadow:0 12px 35px #244c8b18;text-align:center}.practice.active{display:block}.practice h2{font-size:2rem}.practice .word{font-size:clamp(2.4rem,6vw,4rem);font-weight:800;color:#275bd5;margin:18px 0}.practice input{width:min(100%,470px);text-align:center;font-size:1.7rem}.practice button{border:0;border-radius:12px;padding:14px 22px;background:#2864df;color:white;font-size:1.1rem;font-weight:700;cursor:pointer;margin:8px}.practice button.secondary{background:#e9efff;color:#23457d}.practice .feedback{min-height:32px;font-size:1.15rem;font-weight:700}.practice .hint{color:#536782}.practice .score{font-size:1.1rem;font-weight:700}
+
+.account-overlay{position:fixed;inset:0;background:#eaf3ff;z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px}.account-overlay.hidden{display:none}.account-panel{background:white;border-radius:24px;padding:30px;max-width:530px;width:100%;box-shadow:0 18px 55px #1c4b8a33}.account-panel h2{margin-top:0}.account-panel input,.account-panel select{width:100%;padding:13px;border:2px solid #cad9ee;border-radius:12px;font:inherit;margin:8px 0}.account-panel button,.account-bar button,.mark-done{padding:11px 16px;border:0;border-radius:12px;background:#2864df;color:white;font:inherit;font-weight:700;cursor:pointer;margin:4px}.account-bar{background:#fff;border:2px solid #d9e7fc;border-radius:18px;padding:15px;margin:14px 0 20px}.account-bar .actions{display:flex;flex-wrap:wrap;gap:5px}.account-bar button.danger{background:#bb2845}.account-bar button.secondary{background:#eaf2ff;color:#204d94}.progress-track{height:16px;border-radius:20px;background:#dce8fa;overflow:hidden;margin:12px 0}.progress-fill{height:100%;background:#21a675;width:0;transition:width .2s}.status-done{color:#11764b;font-weight:800}.status-pending{color:#775b25}.mark-done{background:#13865c}.small-note{color:#586b83;font-size:.92rem}.account-panel .error{color:#b11e39;min-height:1.2em}.card .status{margin:8px 0;font-weight:700}.viewer-actions{align-items:center}
+
+/* Άσκηση 1 — δική μας έκδοση με οπτικό πληκτρολόγιο */
+.letter-practice{display:none;background:white;border:2px solid #dce8ff;border-radius:20px;padding:22px;margin:12px 0 28px}.letter-practice.active{display:block}
+.letter-practice h2{font-size:clamp(1.5rem,3vw,2.2rem);margin:12px 0}.letter-instructions{background:#eef5ff;border-radius:14px;padding:13px 17px;line-height:1.6}.letter-target{font-size:clamp(4rem,9vw,6rem);font-weight:900;text-align:center;color:#2059c9;margin:10px 0}.letter-kb{background:#e8edf5;padding:12px 6px;border-radius:16px;max-width:850px;margin:12px auto}.letter-kb-row{display:flex;justify-content:center;gap:5px;margin:5px 0}.letter-kb-key{flex:1;max-width:64px;min-width:0;min-height:53px;border:2px solid #b9c6d8;border-radius:9px;background:white;font-size:clamp(.85rem,2vw,1.35rem);font-weight:800;color:#18345d;cursor:pointer}.letter-kb-key.target{background:#ffe44d;border:3px solid #d88700;box-shadow:0 0 0 3px #ffe99b;color:#1a2b44}.letter-kb-key:focus-visible{outline:3px solid #1d5eff}.letter-answer{display:block;margin:10px auto;max-width:340px;width:100%;font-size:2.1rem;text-align:center;padding:10px;border:2px solid #a6bfeb;border-radius:12px}.letter-controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.letter-feedback{text-align:center;font-weight:800;min-height:28px}.letter-stats{text-align:center;font-weight:750;color:#2854a0}.letter-progress{height:12px;background:#e4ecf9;border-radius:20px;overflow:hidden}.letter-progress>div{height:100%;background:#23b47d;width:0;transition:width .2s}
+</style>
+<style>.keyboard-guide{background:#fff8e9;border:3px solid #f5c56b;border-radius:22px;padding:22px;margin:20px 0 24px;text-align:center;box-shadow:0 8px 25px #b86b1b1a}.keyboard-title{font-weight:900;font-size:clamp(20px,3vw,28px);color:#27395a;margin-bottom:18px}.keyboard-row{display:flex;justify-content:center;gap:9px;flex-wrap:wrap}.key{height:92px;min-width:74px;border-radius:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:34px;font-weight:900;background:#eef3fc;border:3px solid #b7c6df;box-shadow:0 5px 0 #9ba9be}.key small{font-size:12px;letter-spacing:.3px;font-weight:900}.key.letter-key{background:#dbeafe;border:5px solid #2563eb;color:#1746a2;transform:translateY(-4px);box-shadow:0 8px 0 #93c5fd}.key.accent-key{background:#ffb347;border:5px solid #c05600;color:#582600;transform:translateY(-4px);box-shadow:0 8px 0 #f59e0b;animation:accentPulse 1.8s ease-in-out infinite}.key.wide{font-size:20px;min-width:104px}.keyboard-note{font-size:18px;line-height:1.6;color:#583a1b;margin:22px 0 0}@keyframes accentPulse{50%{box-shadow:0 8px 0 #f59e0b,0 0 0 7px #fb923c55}}@media(max-width:520px){.key{height:76px;min-width:55px;font-size:27px}.key.wide{min-width:75px;font-size:15px}.key small{font-size:9px}.keyboard-guide{padding:12px}.keyboard-note{font-size:16px}}
+.account-overlay{position:fixed;inset:0;background:#eaf3ff;z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px}.account-overlay.hidden{display:none}.account-panel{background:white;border-radius:24px;padding:30px;max-width:530px;width:100%;box-shadow:0 18px 55px #1c4b8a33}.account-panel h2{margin-top:0}.account-panel input,.account-panel select{width:100%;padding:13px;border:2px solid #cad9ee;border-radius:12px;font:inherit;margin:8px 0}.account-panel button,.account-bar button,.mark-done{padding:11px 16px;border:0;border-radius:12px;background:#2864df;color:white;font:inherit;font-weight:700;cursor:pointer;margin:4px}.account-bar{background:#fff;border:2px solid #d9e7fc;border-radius:18px;padding:15px;margin:14px 0 20px}.account-bar .actions{display:flex;flex-wrap:wrap;gap:5px}.account-bar button.danger{background:#bb2845}.account-bar button.secondary{background:#eaf2ff;color:#204d94}.progress-track{height:16px;border-radius:20px;background:#dce8fa;overflow:hidden;margin:12px 0}.progress-fill{height:100%;background:#21a675;width:0;transition:width .2s}.status-done{color:#11764b;font-weight:800}.status-pending{color:#775b25}.mark-done{background:#13865c}.small-note{color:#586b83;font-size:.92rem}.account-panel .error{color:#b11e39;min-height:1.2em}.card .status{margin:8px 0;font-weight:700}.viewer-actions{align-items:center}
+</style><style>
+.viewer{display:none;background:#fff;border:2px solid #dce8ff;border-radius:20px;overflow:hidden;box-shadow:0 12px 35px #244c8b18;margin:12px 0 30px}.viewer.active{display:block}.viewer-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 18px;background:#eaf2ff}.viewer-head strong{font-size:1.2rem}.viewer-actions{display:flex;gap:9px;flex-wrap:wrap}.viewer-actions button,.viewer-actions a{border:0;background:#2864df;color:#fff;padding:11px 15px;border-radius:11px;font:inherit;font-weight:700;text-decoration:none;cursor:pointer}.viewer-actions .secondary{background:#fff;color:#23457d;border:1px solid #b9c9e7}.viewer iframe{width:100%;height:min(78vh,850px);min-height:560px;border:0;background:white;display:block}.viewer-note{margin:0;padding:10px 18px;color:#50627d;font-size:.94rem}@media(max-width:600px){.viewer iframe{min-height:520px;height:75vh}.viewer-head{align-items:stretch}.viewer-actions{width:100%}}
+
+.account-overlay{position:fixed;inset:0;background:#eaf3ff;z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px}.account-overlay.hidden{display:none}.account-panel{background:white;border-radius:24px;padding:30px;max-width:530px;width:100%;box-shadow:0 18px 55px #1c4b8a33}.account-panel h2{margin-top:0}.account-panel input,.account-panel select{width:100%;padding:13px;border:2px solid #cad9ee;border-radius:12px;font:inherit;margin:8px 0}.account-panel button,.account-bar button,.mark-done{padding:11px 16px;border:0;border-radius:12px;background:#2864df;color:white;font:inherit;font-weight:700;cursor:pointer;margin:4px}.account-bar{background:#fff;border:2px solid #d9e7fc;border-radius:18px;padding:15px;margin:14px 0 20px}.account-bar .actions{display:flex;flex-wrap:wrap;gap:5px}.account-bar button.danger{background:#bb2845}.account-bar button.secondary{background:#eaf2ff;color:#204d94}.progress-track{height:16px;border-radius:20px;background:#dce8fa;overflow:hidden;margin:12px 0}.progress-fill{height:100%;background:#21a675;width:0;transition:width .2s}.status-done{color:#11764b;font-weight:800}.status-pending{color:#775b25}.mark-done{background:#13865c}.small-note{color:#586b83;font-size:.92rem}.account-panel .error{color:#b11e39;min-height:1.2em}.card .status{margin:8px 0;font-weight:700}.viewer-actions{align-items:center}
+</style><style>
+#paragraphPractice{text-align:left;max-width:960px}#paragraphPractice .paragraph-target{background:#f0f6ff;border:2px solid #bcd2ff;border-radius:17px;padding:20px 24px;font-size:clamp(1.2rem,2.4vw,1.6rem);line-height:1.85;white-space:pre-wrap;color:#1a3768;font-weight:650}#paragraphPractice textarea{width:100%;min-height:190px;border:3px solid #b6ccf4;border-radius:16px;padding:18px;font:inherit;font-size:1.3rem;line-height:1.7;resize:vertical}#paragraphPractice textarea:focus{outline:3px solid #b4d2ff;border-color:#2467db}#paragraphPractice .stats{display:flex;gap:14px;flex-wrap:wrap;margin:15px 0;font-weight:800;color:#2754a0}#paragraphPractice .stats span{background:#eaf2ff;border-radius:12px;padding:9px 13px}#paragraphPractice .feedback{text-align:left}#paragraphPractice .task-hint{color:#50617c;font-size:1.05rem}#paragraphPractice .actions{text-align:center}#paragraphPractice .good{color:#16804b}#paragraphPractice .bad{color:#b3412b}
+
+.account-overlay{position:fixed;inset:0;background:#eaf3ff;z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px}.account-overlay.hidden{display:none}.account-panel{background:white;border-radius:24px;padding:30px;max-width:530px;width:100%;box-shadow:0 18px 55px #1c4b8a33}.account-panel h2{margin-top:0}.account-panel input,.account-panel select{width:100%;padding:13px;border:2px solid #cad9ee;border-radius:12px;font:inherit;margin:8px 0}.account-panel button,.account-bar button,.mark-done{padding:11px 16px;border:0;border-radius:12px;background:#2864df;color:white;font:inherit;font-weight:700;cursor:pointer;margin:4px}.account-bar{background:#fff;border:2px solid #d9e7fc;border-radius:18px;padding:15px;margin:14px 0 20px}.account-bar .actions{display:flex;flex-wrap:wrap;gap:5px}.account-bar button.danger{background:#bb2845}.account-bar button.secondary{background:#eaf2ff;color:#204d94}.progress-track{height:16px;border-radius:20px;background:#dce8fa;overflow:hidden;margin:12px 0}.progress-fill{height:100%;background:#21a675;width:0;transition:width .2s}.status-done{color:#11764b;font-weight:800}.status-pending{color:#775b25}.mark-done{background:#13865c}.small-note{color:#586b83;font-size:.92rem}.account-panel .error{color:#b11e39;min-height:1.2em}.card .status{margin:8px 0;font-weight:700}.viewer-actions{align-items:center}
+</style><style id="compact-top-style">
+header{padding:16px 18px 14px}
+header h1{font-size:clamp(1.65rem,3vw,2.35rem);line-height:1.2;margin:0 0 3px}
+header p{font-size:.98rem;line-height:1.3}
+.wrap{padding-top:12px}
+.account-bar{padding:12px 16px;margin:0 0 14px;border-radius:15px}
+.account-bar>strong{font-size:1.12rem}
+.account-bar .progress-track{height:10px;margin:7px 0 4px}
+.account-bar #totalProgressText{margin:3px 0 8px;font-size:.96rem}
+.account-bar .actions{gap:5px}
+.account-bar button{padding:8px 12px;margin:0;font-size:.94rem;border-radius:9px}
+.account-help{margin-top:7px;color:#586b83;font-size:.83rem}
+.account-help summary{cursor:pointer;display:inline-block}
+.account-help p{margin:5px 0 0}
+.toolbar{margin-bottom:12px}
+@media(max-width:540px){header{padding:13px 12px}header h1{font-size:1.55rem}.wrap{padding-top:10px}.account-bar{padding:10px}.account-bar .actions button{flex:1 1 auto}}
+</style>
+<style id="welcome-redesign">
+.account-overlay{background:linear-gradient(145deg,#e6f1ff,#f1edff);padding:16px;overflow:auto}
+.account-panel{max-width:490px;padding:25px 30px 22px;border:1px solid #d9e5ff;border-radius:26px;box-shadow:0 20px 55px #244b9924;text-align:center}
+.account-panel .login-icon{font-size:2.2rem;line-height:1;margin-bottom:8px}
+.account-panel h2{font-size:clamp(1.5rem,3vw,1.9rem);line-height:1.2;color:#173b83;margin:0 0 9px}
+.account-panel .login-intro{font-size:.98rem;line-height:1.45;color:#50647f;margin:0 0 17px}
+.account-panel .login-fields{text-align:left}
+.account-panel label{display:block;font-size:.94rem;font-weight:750;color:#25456e;margin:9px 0 4px}
+.account-panel input,.account-panel select{margin:0 0 4px;padding:11px 13px;border:1.5px solid #c6d7f2;border-radius:12px;background:#fbfdff;color:#153358;font-size:1rem;min-height:46px}
+.account-panel input:focus,.account-panel select:focus{outline:3px solid #c8d9ff;border-color:#356be7}
+.account-panel .login-divider{display:flex;align-items:center;gap:12px;color:#8294b0;font-size:.82rem;margin:12px 0 7px}
+.account-panel .login-divider:before,.account-panel .login-divider:after{content:"";height:1px;background:#dbe4f3;flex:1}
+.account-panel #accountEnter{display:block;width:100%;margin:13px 0 8px;padding:13px 15px;border-radius:13px;font-size:1.06rem;background:linear-gradient(110deg,#2563eb,#6553dc);box-shadow:0 5px 14px #2864df35}
+.account-panel #accountEnter:hover{filter:brightness(1.07)}
+.account-panel .small-note{font-size:.78rem;color:#6b7b92;line-height:1.4;margin:9px 0 0}
+.account-panel .error{margin:5px 0;color:#b42342}
+@media(max-height:670px){.account-overlay{align-items:flex-start}.account-panel{margin:auto}}
+@media(max-width:480px){.account-panel{padding:20px 18px}}
+</style>
+<style>
+/* Ανανεωμένη οπτική ανατροφοδότηση Άσκησης 1 */
+.letter-practice{max-width:980px;margin:12px auto 28px;padding:clamp(15px,3vw,28px);box-shadow:0 12px 35px #244c8b16}
+.letter-practice .letter-answer{max-width:510px;min-height:90px;border:3px solid #a6bfeb;border-radius:19px;background:#f9fbff;font-size:clamp(2.3rem,5vw,3.3rem);transition:background .18s,border-color .18s,box-shadow .18s}
+.letter-practice .letter-answer:focus{outline:none;border-color:#376bf1;box-shadow:0 0 0 5px #376bf124}
+.letter-practice .letter-answer.is-correct{border-color:#13a46b;background:#e8fff4;box-shadow:0 0 0 5px #1aaf6a25;color:#086b43}
+.letter-practice .letter-answer.is-wrong{border-color:#e88946;background:#fff5ed}
+.letter-practice .letter-controls{margin:16px auto;gap:12px}
+.letter-practice .letter-controls button{font:inherit;font-weight:800;font-size:1.06rem;padding:14px 20px;border:0;border-radius:13px;cursor:pointer;background:#2864df;color:white;box-shadow:0 4px 0 #1746a8}
+.letter-practice .letter-controls button.letter-next{background:#0d9a63;box-shadow:0 4px 0 #08764b}
+.letter-practice .letter-controls button#letterRestart{background:#e9f0fa;color:#27476d;box-shadow:none}
+.letter-practice .letter-controls button:disabled{background:#e7eaf0;color:#8793a3;box-shadow:none;cursor:not-allowed}
+.letter-practice .letter-feedback{display:flex;align-items:center;justify-content:center;gap:14px;text-align:left;max-width:620px;min-height:75px;margin:18px auto 8px;padding:15px 20px;border:2px solid #dce6f4;border-radius:18px;background:#f7faff;color:#4a6386;font-size:1.1rem}
+.letter-practice .letter-feedback strong{display:block;font-size:clamp(1.12rem,2.4vw,1.45rem);line-height:1.25}
+.letter-practice .letter-feedback small{display:block;font-size:.94rem;font-weight:500;margin-top:6px;line-height:1.4}
+.letter-practice .letter-feedback.success{background:#e7fff2;border-color:#50ca91;color:#087044;box-shadow:0 7px 22px #0f9b6420;animation:letterCelebrate .35s ease-out}
+.letter-practice .letter-feedback.error{background:#fff4e9;border-color:#f1ae79;color:#9a491b}
+.letter-practice .letter-feedback-icon{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:48px;height:48px;border-radius:50%;background:#10a66a;color:white;font-size:1.9rem;font-weight:900}
+.letter-practice .letter-feedback.error .letter-feedback-icon{background:#e57b3b}
+@keyframes letterCelebrate{from{transform:scale(.97);opacity:.6}to{transform:scale(1);opacity:1}}
+@media(max-width:520px){.letter-practice .letter-controls button{flex:1 1 42%;padding:12px 10px}.letter-practice .letter-feedback{padding:12px}.letter-practice .letter-feedback-icon{width:40px;height:40px}}
+</style>
+<style id="new-practice-css">
+.new-practice{display:none;background:#fff;border:2px solid #dce8ff;border-radius:22px;padding:clamp(16px,3vw,30px);margin:12px auto 28px;max-width:950px;box-shadow:0 12px 30px #214e8917}.new-practice.active{display:block}.new-practice h2{margin:14px 0 6px;font-size:clamp(1.5rem,3vw,2.15rem)}.np-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.np-pill{background:#eaf2ff;color:#2256ac;border-radius:100px;padding:8px 13px;font-weight:800}.np-track{height:13px;border-radius:30px;background:#e7edf7;overflow:hidden;margin:18px 0}.np-track>div{height:100%;width:0;background:linear-gradient(90deg,#27ae83,#57d7a7);transition:width .25s}.np-target{background:linear-gradient(120deg,#f1f6ff,#f8f4ff);border:2px solid #d4e2fc;border-radius:18px;padding:20px;white-space:pre-wrap;overflow-wrap:anywhere;text-align:center;font-weight:850;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.6;margin:16px 0}.np-help{background:#fff7e4;border:1px solid #f5d895;border-radius:12px;padding:12px 15px;line-height:1.6}.np-input{display:block;width:100%;max-width:none;border:2px solid #a8c2f0;border-radius:15px;font:inherit;font-size:1.6rem;line-height:1.6;padding:14px;min-height:70px;resize:vertical;margin:12px 0}.np-input:focus{outline:3px solid #c2d7ff}.np-input.correct{border-color:#18a66d;background:#edfff6}.np-input.wrong{border-color:#d97740;background:#fff7f1}.np-actions{display:flex;gap:10px;flex-wrap:wrap}.np-actions button,.np-back{background:#2864df;color:#fff;border:0;border-radius:12px;padding:12px 18px;font:inherit;font-weight:800;cursor:pointer}.np-actions button:disabled{opacity:.4;cursor:not-allowed}.np-actions button.secondary,.np-back{background:#eaf1ff;color:#24509a}.np-feedback{margin-top:14px;border-radius:15px;padding:15px;font-weight:800;min-height:55px;background:#f0f5ff;color:#315582}.np-feedback.good{background:#e7fff2;color:#087044;border:2px solid #5acb96}.np-feedback.bad{background:#fff2e7;color:#984818;border:2px solid #efae7e}.np-keys{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin:12px auto}.np-key{background:#fff;border:2px solid #b9c6dc;border-radius:9px;min-width:44px;padding:9px;font-weight:900;font-size:1.1rem}.np-key.lit{background:#ffe45d;border-color:#d59000;box-shadow:0 0 0 3px #ffedac}.np-target .wrong-char{color:#c02d38;text-decoration:underline wavy}.np-target .correct-char{color:#10855b}
+</style><style id="compact-exercise-v3">
+/* Συμπαγής διάταξη σε όλες τις ασκήσεις */
+.new-practice{max-width:1050px;padding:16px 22px;margin:8px auto 18px}
+.new-practice h2{font-size:clamp(1.3rem,2.2vw,1.8rem);margin:8px 0 3px}
+.new-practice .np-track{height:9px;margin:9px 0}
+.new-practice .np-help{padding:8px 12px;line-height:1.35;margin:7px 0}
+.new-practice .np-keys{margin:7px auto;gap:4px}
+.new-practice .np-key{padding:5px 8px;min-width:31px;font-size:1rem}
+.new-practice .np-target{font-size:clamp(1.35rem,2.8vw,2.1rem);line-height:1.35;padding:10px 14px;margin:8px 0;border-radius:13px}
+.new-practice .np-input{min-height:46px;height:52px;font-size:1.3rem;line-height:1.4;padding:8px 12px;margin:7px 0 10px;resize:none}
+.new-practice:has(#npAnswer[rows="3"]) .np-input{height:110px;resize:vertical}
+.new-practice .np-actions button{padding:9px 13px}
+.new-practice .np-feedback{min-height:0;padding:10px 12px;margin-top:9px}
+.new-practice .fruit-target{background:#f2fbff;border-color:#a7d6ed;padding:12px 14px}
+.fruit-grid{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:8px;max-width:450px;margin:auto}
+.fruit-grid span{font-size:clamp(2rem,3.3vw,2.8rem);line-height:1.2;filter:drop-shadow(0 2px 1px #00000014)}
+.letter-practice,.practice{padding-top:14px!important;padding-bottom:14px!important}
+.letter-target{padding:10px!important;margin:10px auto!important}
+#paragraphPractice textarea{min-height:115px}
+#paragraphPractice .paragraph-target{padding:12px 16px;line-height:1.5}
+@media(max-width:600px){.new-practice{padding:12px}.fruit-grid{gap:5px}.fruit-grid span{font-size:2rem}}
+</style><style id="teacher-compact-css">
+header{padding:8px 12px!important}header h1{font-size:clamp(1.25rem,2.4vw,1.9rem)!important;margin:0!important}header p{font-size:.82rem!important;margin:2px 0 0!important}.wrap{padding-top:7px!important}.account-bar{padding:8px 12px!important;margin-bottom:9px!important}.student-topline{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.student-topbuttons{display:flex;gap:6px;flex-wrap:wrap}.student-topbuttons button{font-size:.82rem!important;padding:6px 10px!important}.account-bar .progress-track{height:7px!important;margin:5px 0 3px!important}.account-bar #totalProgressText{margin:2px 0!important;font-size:.83rem!important}.teacher-actions[hidden],.account-help[hidden]{display:none!important}.teacher-actions{border-top:1px solid #d9e7fc;padding-top:9px;margin-top:9px}.teacher-actions button{font-size:.85rem!important;padding:7px 9px!important}
+</style><style>.creator-credit{font-weight:700;color:#3653a0}footer{text-align:center;padding:12px 10px}</style><style id="letter-no-scroll-v1">
+/* Άσκηση 1: το γράμμα, το πληκτρολόγιο και η απάντηση στην ίδια οθόνη */
+#letterPractice{padding:10px 16px!important;margin:5px auto 12px!important}
+#letterPractice h2{font-size:1.35rem;margin:3px 0!important}
+#letterPractice>p:first-of-type{margin:2px 0 6px;font-size:.88rem}
+#letterPractice .letter-instructions{padding:6px 10px;line-height:1.3;font-size:.91rem}
+#letterPractice .letter-stats{margin:5px 0 2px;font-size:.92rem}
+#letterPractice .letter-progress{height:7px}
+#letterPractice .letter-target{font-size:3.1rem!important;line-height:1.05!important;padding:3px!important;margin:3px auto!important}
+#letterPractice>strong{display:block;text-align:center;font-size:.88rem;margin:2px 0}
+#letterPractice .letter-kb{padding:5px 7px;margin:4px auto 5px;border-radius:10px}
+#letterPractice .letter-kb-row{gap:4px;margin:3px 0}
+#letterPractice .letter-kb-key{min-height:34px;max-width:58px;border-radius:7px;font-size:1rem;border-width:1.5px}
+#letterPractice .letter-kb-key.target{border-width:2px;box-shadow:0 0 0 2px #ffe99b}
+#letterPractice .letter-kb+p{display:none}
+#letterPractice label{display:block;text-align:center;font-size:.94rem;margin:4px 0}
+#letterPractice .letter-answer{min-height:48px!important;height:48px!important;font-size:1.7rem!important;padding:4px 9px!important;margin:4px auto!important;max-width:350px!important;border-radius:11px!important}
+#letterPractice .letter-controls{margin:6px auto!important;gap:7px!important}
+#letterPractice .letter-controls button{padding:8px 11px!important;font-size:.93rem!important;border-radius:9px!important}
+#letterPractice .letter-feedback{min-height:42px!important;margin:7px auto 3px!important;padding:7px 10px!important;gap:8px!important;border-radius:11px!important}
+#letterPractice .letter-feedback-icon{width:32px;height:32px;font-size:1.3rem}
+#letterPractice .letter-feedback strong{font-size:1rem}
+#letterPractice .letter-feedback small{font-size:.82rem;margin-top:2px}
+#letterPractice>p:last-child{margin:4px 0 0;font-size:.82rem}
+@media(max-height:760px){#letterPractice .letter-instructions{font-size:.85rem}#letterPractice .letter-kb-key{min-height:30px}#letterPractice .letter-target{font-size:2.6rem!important}#letterPractice>p:last-child{display:none}}
+@media(max-width:520px){#letterPractice{padding:8px!important}#letterPractice .letter-kb-key{min-height:30px;font-size:.78rem}#letterPractice .letter-controls button{padding:7px!important;font-size:.83rem!important}}
+</style><style id="accent-no-scroll-v1">
+/* Άσκηση 5: διατηρούμε ορατό το πεδίο πληκτρολόγησης σε μικρές οθόνες */
+#accentPractice{padding:9px 14px!important;margin:5px auto 12px!important}
+#accentPractice>button:first-child{padding:6px 10px!important;font-size:.86rem!important}
+#accentPractice h2{font-size:1.4rem!important;margin:4px 0!important}
+#accentPractice>p{margin:3px 0!important;font-size:.92rem!important;line-height:1.3!important}
+#accentPractice .keyboard-guide{padding:8px 10px!important;margin:7px 0!important;border-width:2px!important;border-radius:12px!important;box-shadow:none!important}
+#accentPractice .keyboard-title{font-size:1rem!important;margin:0 0 7px!important}
+#accentPractice .keyboard-row{gap:7px!important;flex-wrap:nowrap!important}
+#accentPractice .key{height:52px!important;min-width:52px!important;padding:3px!important;font-size:1.5rem!important;border-width:2px!important;border-radius:9px!important;box-shadow:0 3px 0 #9ba9be!important;transform:none!important}
+#accentPractice .key.letter-key,#accentPractice .key.accent-key{border-width:3px!important;box-shadow:0 3px 0 #93c5fd!important}
+#accentPractice .key.accent-key{box-shadow:0 3px 0 #f59e0b!important}
+#accentPractice .key.wide{min-width:76px!important;font-size:.9rem!important}
+#accentPractice .key small{font-size:.58rem!important;line-height:1.1!important}
+#accentPractice .keyboard-note{font-size:.88rem!important;line-height:1.3!important;margin:8px 0 0!important}
+#accentPractice .score{margin:5px 0!important;padding:4px 7px!important}
+#accentPractice .word{margin:6px 0!important;padding:6px!important;font-size:clamp(1.7rem,4vw,2.3rem)!important;line-height:1.2!important}
+#accentPractice #accentAnswer{display:block;min-height:45px!important;height:45px!important;margin:6px auto!important;padding:6px 10px!important;font-size:1.3rem!important}
+#accentPractice #accentAnswer+div{margin:5px 0!important}
+#accentPractice #accentAnswer+div button{padding:8px 10px!important;font-size:.9rem!important;margin:3px!important}
+#accentPractice #accentFeedback{margin:5px 0!important;min-height:24px!important}
+@media(max-height:760px){#accentPractice .keyboard-guide{padding:6px!important;margin:5px 0!important}#accentPractice .key{height:44px!important}#accentPractice .keyboard-note{font-size:.82rem!important;margin-top:5px!important}}
+@media(max-width:480px){#accentPractice .keyboard-row{gap:4px!important}#accentPractice .key{min-width:42px!important;height:45px!important;font-size:1.2rem!important}#accentPractice .key.wide{min-width:62px!important;font-size:.76rem!important}#accentPractice .key small{font-size:.48rem!important}}
+</style><style id="accent-success-fix">
+#accentPractice #accentAnswer.accent-correct{background:#e4ffed!important;border:3px solid #16a34a!important;color:#166534!important;box-shadow:0 0 0 4px #bbf7d0!important}
+#accentPractice #accentAnswer.accent-wrong{background:#fff0ed!important;border:3px solid #dc6045!important}
+#accentPractice #accentFeedback.accent-good{background:#e4ffed;color:#166534;border:2px solid #4ade80;border-radius:10px;padding:8px}
+#accentPractice #accentFeedback.accent-bad{background:#fff2e9;color:#9a3412;border:2px solid #fdba74;border-radius:10px;padding:8px}
+#accentPractice #accentNext:disabled{opacity:.45;cursor:not-allowed}
+</style><style id="paragraph-feedback-fix">
+#paragraphPractice textarea.paragraph-correct{background:#e6fff0!important;border:3px solid #18a365!important;box-shadow:0 0 0 3px #b7efd1;color:#11633f}
+#paragraphPractice textarea.paragraph-wrong{background:#fff1ed!important;border:3px solid #db664f!important}
+#paragraphPractice #paragraphFeedback.good{background:#e6fff0;color:#086b3c;border:2px solid #56c991;border-radius:12px;padding:10px 14px}
+#paragraphPractice #paragraphFeedback.bad{background:#fff1ed;color:#9b3829;border:2px solid #efad9c;border-radius:12px;padding:10px 14px}
+#paragraphPractice #paragraphNext:disabled{opacity:.45;cursor:not-allowed}
+</style><style>
+.sequence-continue{display:block;margin:16px auto 12px;padding:17px 22px;background:#17834d;color:white;border:0;border-radius:16px;font-size:1.22rem;font-weight:800;box-shadow:0 5px 16px #17834d35;cursor:pointer;max-width:100%;white-space:normal}
+.sequence-continue:hover{background:#116b3d}
+.sequence-continue[hidden]{display:none!important}
+.locked-link{opacity:.55;cursor:not-allowed;filter:grayscale(1)}
+</style><style id="uniform-exercises-2026">
+/* Ενιαία εμφάνιση, άμεση πρόσβαση στην απάντηση */
+#letterPractice,#accentPractice,#paragraphPractice,#newPractice{max-width:1050px!important;padding:12px 18px!important;margin:6px auto 16px!important;border:2px solid #dce8ff!important;border-radius:18px!important;background:#fff!important;box-shadow:0 8px 24px #214e8912!important}
+#letterPractice h2,#accentPractice h2,#paragraphPractice h2,#newPractice h2{font-size:clamp(1.3rem,2.3vw,1.85rem)!important;margin:5px 0!important}
+#letterPractice p,#accentPractice p,#paragraphPractice p{margin:5px 0!important;line-height:1.35!important}
+#letterPractice .letter-instructions,#accentPractice .hint,#paragraphPractice .task-hint{padding:6px 10px!important;margin:5px 0!important;line-height:1.35!important}
+#letterPractice .letter-target{padding:6px 12px!important;margin:5px auto!important;min-height:0!important}
+#letterPractice .letter-kb{margin:5px auto!important;padding:4px!important;gap:3px!important}
+#letterPractice .letter-kb-row{gap:3px!important;margin:2px auto!important}
+#letterPractice .letter-kb-key{min-height:30px!important;padding:4px!important;font-size:clamp(.8rem,1.4vw,1rem)!important}
+#letterPractice .letter-stats,#letterPractice .letter-progress{margin:5px auto!important}
+#letterPractice .letter-answer,#accentPractice #accentAnswer,#paragraphPractice #paragraphInput,#newPractice #npAnswer{border:2px solid #a8c2f0!important;border-radius:12px!important;background:#fff;font-size:1.2rem!important;padding:8px 12px!important;margin:6px 0!important;box-sizing:border-box!important}
+#letterPractice .letter-answer.is-correct,#accentPractice #accentAnswer.accent-correct,#paragraphPractice #paragraphInput.paragraph-correct,#newPractice #npAnswer.correct{background:#e7fff2!important;border-color:#17a76d!important;box-shadow:0 0 0 2px #a3edca!important}
+#letterPractice .letter-answer.is-wrong,#accentPractice #accentAnswer.accent-wrong,#paragraphPractice #paragraphInput.paragraph-wrong,#newPractice #npAnswer.wrong{background:#fff2ed!important;border-color:#d46c42!important}
+#letterPractice .letter-controls,#accentPractice #accentAnswer+div,#paragraphPractice .actions,#newPractice .np-actions{display:flex!important;gap:8px!important;flex-wrap:wrap!important;margin:7px 0!important}
+#letterPractice .letter-controls button,#accentPractice #accentAnswer+div button,#paragraphPractice .actions button,#newPractice .np-actions button{border-radius:11px!important;padding:9px 13px!important;font-weight:800!important;font-size:.98rem!important}
+#letterNext:not(:disabled),#accentNext:not(:disabled),#paragraphNext:not(:disabled),#npNext:not(:disabled){background:#139c61!important;color:white!important;border-color:#139c61!important;box-shadow:0 3px 10px #139c6133!important;opacity:1!important}
+#letterNext:disabled,#accentNext:disabled,#paragraphNext:disabled,#npNext:disabled{opacity:.42!important;cursor:not-allowed!important}
+#letterPractice .letter-feedback,#accentPractice #accentFeedback,#paragraphPractice #paragraphFeedback,#newPractice #npFeedback{padding:9px 12px!important;margin:7px 0!important;min-height:0!important;border-radius:12px!important}
+#accentPractice .keyboard-guide{padding:6px 10px!important;margin:5px auto!important}
+#accentPractice .keyboard-row{margin:5px auto!important}
+#accentPractice .keyboard-note{margin:3px 0!important}
+#paragraphPractice #paragraphInput{min-height:105px!important}
+#paragraphPractice .paragraph-target{padding:10px 12px!important;margin:6px 0!important}
+#letterPractice .sequence-continue,#accentPractice .sequence-continue,#paragraphPractice .sequence-continue,#newPractice .sequence-continue{display:block;width:100%;background:#128b56;color:#fff;padding:14px;border-radius:12px;margin:12px 0;font-weight:900}
+#letterPractice .sequence-continue[hidden],#accentPractice .sequence-continue[hidden],#paragraphPractice .sequence-continue[hidden],#newPractice .sequence-continue[hidden]{display:none!important}
+.teacher-structure{border:1px solid #c6d8f3;border-radius:14px;background:#f7faff;padding:12px;margin-top:10px}.teacher-structure[hidden]{display:none!important}.teacher-structure table{width:100%;border-collapse:collapse;font-size:.88rem}.teacher-structure th,.teacher-structure td{padding:7px;border-bottom:1px solid #dce5f4;text-align:left}.teacher-structure button{padding:5px 8px;font-size:.82rem}.teacher-preview-banner{background:#fff1c8;color:#694400;padding:8px 12px;border-radius:10px;margin:6px 0;font-weight:800}
+@media(max-width:650px){#letterPractice,#accentPractice,#paragraphPractice,#newPractice{padding:10px!important}.teacher-structure{overflow-x:auto}}
+</style></head>
+<body><div class="account-overlay" id="accountOverlay"><div class="account-panel">
+<div class="login-icon">⌨️</div><h2>Μαθαίνω το Πληκτρολόγιο!</h2>
+<p class="login-intro">Φτιάξε τον λογαριασμό σου για να αποθηκεύεις την πρόοδό σου στις 14 ασκήσεις.</p>
+<div class="login-fields"><label for="accountSelect">👤 Έχεις ήδη λογαριασμό;</label><select id="accountSelect"><option value="">✨ Δημιουργία νέου λογαριασμού</option></select>
+<div class="login-divider"><span>Στοιχεία μαθητή</span></div>
+<label for="studentName">Το όνομά σου</label><input id="studentName" maxlength="40" placeholder="π.χ. Μαρία Παπαδοπούλου" autocomplete="off">
+<label for="studentClass">Το τμήμα σου</label><select id="studentClass"><option value="">— Διάλεξε τμήμα —</option><option value="Α1">Α1</option><option value="Α2">Α2</option><option value="Β1">Β1</option><option value="Β2">Β2</option><option value="Γ1">Γ1</option><option value="Γ2">Γ2</option><option value="Γ3">Γ3</option><option value="Δ1">Δ1</option><option value="Δ2">Δ2</option><option value="Ε1">Ε1</option><option value="Ε2">Ε2</option><option value="ΣΤ1">ΣΤ1</option><option value="ΣΤ2">ΣΤ2</option></select></div>
+<p class="error" id="accountError" role="alert"></p><button id="accountEnter" type="button">🚀 Κάνε λογαριασμό &amp; ξεκίνα!</button>
+<p class="small-note">🔒 Χωρίς email ή κωδικό · Η πρόοδός σου αποθηκεύεται σε αυτή τη συσκευή.</p>
+</div></div><header><h1>⌨️ Μαθαίνω το Πληκτρολόγιο</h1><p>14 διαδραστικές ασκήσεις • Διάλεξε αριθμό και ξεκίνα!</p></header>
+<main class="wrap"><section class="account-bar" id="accountBar" hidden><div class="student-topline"><strong id="studentGreeting"></strong><div class="student-topbuttons"><button id="switchAccount" class="secondary" type="button">👤 Αλλαγή μαθητή</button><button id="teacherToggle" class="secondary" type="button">🔐 Εκπαιδευτικός</button></div></div><div class="progress-track" aria-label="Πρόοδος μαθητή"><div class="progress-fill" id="totalProgressFill"></div></div><p id="totalProgressText"></p><div class="actions teacher-actions" id="teacherActions" hidden><button id="changeClass" class="secondary" type="button">🏫 Αλλαγή τμήματος</button><button id="exportAll" type="button">📊 Excel όλων των μαθητών</button><button id="exportProgress" type="button">⬇️ Λήψη προόδου (Excel)</button><button id="backupAll" type="button">💾 Αντίγραφο όλων (JSON)</button><button id="backupStudent" type="button">💾 Αντίγραφο μαθητή (JSON)</button><button id="restoreBackup" type="button">📂 Επαναφορά μαθητών (JSON)</button><input id="backupFile" type="file" accept=".json,application/json" hidden><button id="deleteAccount" class="danger" type="button">🗑️ Διαγραφή λογαριασμού</button></div><details class="account-help" id="accountHelp" hidden><summary>Πώς καταγράφεται η πρόοδος;</summary><p class="small-note">Και οι 14 ασκήσεις είναι δικές μας και καταγράφονται μόνο μετά από πραγματικά σωστή ολοκλήρωση όλων των βημάτων.</p></details></section><section id="newPractice" class="new-practice" aria-label="Διαδραστική άσκηση πληκτρολόγησης"><button type="button" class="np-back" id="npBack">← Όλες οι ασκήσεις</button><div class="np-head"><h2 id="npTitle"></h2><span class="np-pill" id="npCount"></span></div><p id="npDescription"></p><div class="np-track"><div id="npProgress"></div></div><div class="np-help" id="npHelp"></div><div class="np-keys" id="npKeys"></div><div class="np-target" id="npTarget"></div><label for="npAnswer"><strong>✍️ Πληκτρολόγησε εδώ:</strong></label><textarea id="npAnswer" class="np-input" rows="3" autocomplete="off" spellcheck="false" autocapitalize="off"></textarea><div class="np-actions"><button id="npCheck" type="button">✔ Έλεγχος</button><button id="npNext" type="button" disabled>➡️ Επόμενο</button><button id="npRestart" type="button" class="secondary">↻ Από την αρχή</button></div><div id="npFeedback" class="np-feedback" role="status" aria-live="polite">Γράψε την απάντηση και πάτησε «Έλεγχος».</div></section><section id="letterPractice" class="letter-practice" aria-label="Άσκηση 1: Πληκτρολογώ γραμματάκια"><button class="secondary" id="letterBack" type="button">← Όλες οι ασκήσεις</button><h2>🌈 Άσκηση 1: Πληκτρολογώ γραμματάκια!</h2><p>Α΄ Δημοτικού · Βρίσκω πού είναι το γράμμα και το γράφω!</p><div class="letter-instructions">👀 Κοίτα το γράμμα. ⌨️ Βρες τη θέση του στο πληκτρολόγιο: <strong>το σωστό πλήκτρο φωτίζεται κίτρινο</strong>. Τα πλήκτρα δείχνουν ΚΕΦΑΛΑΙΑ, αλλά γράφουμε το μικρό γράμμα. ✍️ Έπειτα γράψε το γράμμα στο πλαίσιο.</div><div class="letter-stats" id="letterStats"></div><div class="letter-progress"><div id="letterProgress"></div></div><div class="letter-target" id="letterTarget"></div><strong>⌨️ Να πού βρίσκεται το γράμμα στο πληκτρολόγιο:</strong><div class="letter-kb" id="letterKeyboard" aria-label="Ελληνικό πληκτρολόγιο"></div><p style="text-align:center">🟨 Μπορείς να πατήσεις το κίτρινο πλήκτρο και στην εικόνα.</p><label for="letterAnswer"><strong>✍️ ΓΡΑΨΕ ΑΥΤΟ ΤΟ ΓΡΑΜΜΑ:</strong></label><input class="letter-answer" id="letterAnswer" maxlength="2" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Γράψε εδώ"><div class="letter-controls"><button id="letterCheck" type="button">✔ Έλεγχος</button><button id="letterNext" class="letter-next" type="button" disabled>➡️ Επόμενο γράμμα</button><button class="secondary" id="letterRestart" type="button">↻ Από την αρχή</button></div><div class="letter-feedback" id="letterFeedback" role="status" aria-live="polite"></div><p style="text-align:center">💡 Αν δεν το βρίσκεις, κοίτα το κίτρινο πλήκτρο. Επίλεξε ελληνική γλώσσα πληκτρολογίου.</p></section><section id="accentPractice" class="practice" aria-label="Άσκηση 5: Οι τόνοι"><button class="secondary" id="backToList">← Επιστροφή στις ασκήσεις</button><h2>✍️ Άσκηση 5: Οι τόνοι</h2><p>Πληκτρολόγησε τη λέξη <strong>με τον σωστό τόνο</strong>.</p><p class="hint">Στο ελληνικό πληκτρολόγιο πάτησε πρώτα το πλήκτρο τόνου (δίπλα στο Λ) και μετά το φωνήεν.</p><div class="keyboard-guide" aria-label="Θέση πλήκτρων Λ και τόνου"><div class="keyboard-title">⌨️ Βρες τα πλήκτρα στο πληκτρολόγιό σου</div><div class="keyboard-row"><span class="key ordinary">Κ</span><span class="key letter-key">Λ<small>ΓΡΑΜΜΑ Λ</small></span><span class="key accent-key" title="Πρώτα πάτησε εδώ">΄<small>1. ΤΟΝΟΣ</small></span><span class="key ordinary wide">Enter ↵</span></div><p class="keyboard-note">🟠 <strong>Πρώτα τον τόνο (΄)</strong> — μετά το φωνήεν (α, ε, η, ι, ο, υ, ω). <strong>Το Λ</strong> βρίσκεται ακριβώς αριστερά από το πλήκτρο του τόνου.</p></div><div class="score" id="accentScore"></div><div class="word" id="accentWord"></div><input id="accentAnswer" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Γράψε τη λέξη εδώ" aria-label="Γράψε τη λέξη με τόνο"><div><button id="accentCheck">Έλεγχος ✓</button><button class="secondary" id="accentNext">Επόμενη λέξη →</button><button class="secondary" id="accentRestart">Από την αρχή ↻</button></div><p id="accentFeedback" class="feedback" aria-live="polite"></p></section><section id="paragraphPractice" class="practice" aria-label="Άσκηση 13: Παράγραφος"><button class="secondary" id="paragraphBack" type="button">← Όλες οι ασκήσεις</button><h2>📄 Άσκηση 13: Γράφω παραγράφους</h2><p class="task-hint">Διάβασε την παράγραφο και πληκτρολόγησέ την ακριβώς όπως εμφανίζεται. Πρόσεξε <strong>τόνους, κεφαλαία, σημεία στίξης και κενά</strong>.</p><div class="stats"><span id="paragraphLevel">Παράγραφος 1/8</span><span id="paragraphProgress">Πρόοδος: 0%</span><span id="paragraphScore">Ολοκληρωμένες: 0</span></div><div class="paragraph-target" id="paragraphTarget"></div><p class="task-hint">⌨️ Γράψε εδώ την παράγραφο:</p><textarea id="paragraphInput" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Πληκτρολόγησε την παράγραφο"></textarea><div class="actions"><button id="paragraphCheck" type="button">Έλεγχος ✓</button><button id="paragraphNext" class="secondary" type="button" disabled>Επόμενη παράγραφος →</button><button id="paragraphRetry" class="secondary" type="button">Καθαρισμός ↻</button></div><p class="feedback" id="paragraphFeedback" aria-live="polite"></p></section><section class="viewer" id="exerciseViewer" aria-label="Προβολή άσκησης"><div class="viewer-head"><strong id="viewerTitle">Άσκηση</strong><div class="viewer-actions"><button type="button" class="secondary" id="viewerBack">← Όλες οι ασκήσεις</button><a id="viewerExternal" href="#" target="_blank" rel="noopener noreferrer">Άνοιγμα σε νέα καρτέλα ↗</a></div></div><p class="viewer-note" id="externalTracking">🔒 Η ολοκλήρωση αυτής της εξωτερικής άσκησης δεν μπορεί να επιβεβαιωθεί αυτόματα. Δεν υπάρχει κουμπί χειροκίνητης δήλωσης.</p><iframe id="exerciseFrame" title="Διαδραστική άσκηση πληκτρολογίου" allow="fullscreen" referrerpolicy="no-referrer-when-downgrade"></iframe><p class="viewer-note">Αν μια εξωτερική άσκηση δεν εμφανιστεί εδώ, χρησιμοποίησε το «Άνοιγμα σε νέα καρτέλα». Η εμφάνιση μέσα στη σελίδα εξαρτάται από τις ρυθμίσεις της αρχικής ιστοσελίδας.</p></section><div class="toolbar" id="listToolbar"><strong>📚 Οι ασκήσεις μας (1–14)</strong><input id="search" type="search" placeholder="🔎 Αναζήτηση άσκησης…" aria-label="Αναζήτηση άσκησης"></div><div class="grid" id="grid"></div><p id="empty">Δεν βρέθηκαν ασκήσεις.</p></main><footer>Μαθαίνω το Πληκτρολόγιο · 14 διαδραστικές ασκήσεις.<span class="creator-credit"> · Δημιουργός: Τσιάλος Δημήτριος</span></footer>
+<script>
+const base='https://karadespina1.github.io/dimotiko/';
+const exercises=[
+['01_letters.html','Τα γράμματα','Γνωρίζω τα γράμματα στο πληκτρολόγιο.','🔤'],
+['02_numbers.html','Οι αριθμοί','Εξασκούμαι στην πληκτρολόγηση αριθμών.','🔢'],
+['03_Space.html','Το πλήκτρο Space','Μαθαίνω να αφήνω κενά ανάμεσα στις λέξεις.','␣'],
+['04_Backspace.html','Το πλήκτρο Backspace','Διορθώνω όσα πληκτρολογώ.','⌫'],
+['05_Caps.html','Κεφαλαία γράμματα','Γνωρίζω τα κεφαλαία γράμματα.','🔠'],
+['06_accents.html','Οι τόνοι','Εξασκούμαι στον τονισμό των λέξεων.','✍️'],
+['07_Enter.html','Το πλήκτρο Enter','Μαθαίνω να αλλάζω γραμμή.','↵'],
+['08_sentences.html','Προτάσεις','Πληκτρολογώ ολοκληρωμένες προτάσεις.','💬'],
+['09_language.html','Αλλαγή γλώσσας','Γνωρίζω την εναλλαγή γλώσσας πληκτρολογίου.','🌐'],
+['10_symbols.html','Σύμβολα – Μέρος 1','Εξασκούμαι στα ειδικά σύμβολα.','✨'],
+['11_symbols.html','Σύμβολα – Μέρος 2','Συνεχίζω την εξάσκηση στα σύμβολα.','🔣'],
+['12_math.html','Μαθηματικά σύμβολα','Πληκτρολογώ μαθηματικές πράξεις και σύμβολα.','➕'],
+['13_paragraph.html','Παράγραφος','Γράφω μεγαλύτερα τμήματα κειμένου.','📄'],
+['14_text.html','Ολόκληρο κείμενο','Συνδυάζω όσα έμαθα πληκτρολογώντας κείμενο.','📝']
+];
+// Νέα εκπαιδευτική σειρά: το Space μετά την εκμάθηση τόνων.
+// Οι εσωτερικοί δείκτες μένουν ίδιοι ώστε να μη χαθεί η πρόοδος.
+const DISPLAY_ORDER=[0,1,3,4,5,2,6,7,8,9,10,11,12,13];
+const displayNumber=i=>DISPLAY_ORDER.indexOf(i)+1;
+const CLASSROOMS=["Α1", "Α2", "Β1", "Β2", "Γ1", "Γ2", "Γ3", "Δ1", "Δ2", "Ε1", "Ε2", "ΣΤ1", "ΣΤ2"];
+const STORAGE_KEY='typing_students_v1';
+let accounts={},activeId=null,currentExternal=null;
+try{accounts=JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}')||{}}catch(e){accounts={}}
+// Προηγούμενες χειροκίνητες δηλώσεις εξωτερικών ασκήσεων δεν θεωρούνται επαληθευμένες.
+for(const a of Object.values(accounts)){if(a.done){for(const n of Object.keys(a.done)){if(!Number.isInteger(+n)||+n<1||+n>14)delete a.done[n]}}}
+const $=id=>document.getElementById(id);
+function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(accounts));return true}catch(e){alert('Δεν ήταν δυνατή η αποθήκευση. Έλεγξε τις ρυθμίσεις απορρήτου του browser.');return false}}
+function student(){return accounts[activeId]}
+function accountChoices(){const sel=$('accountSelect');sel.replaceChildren(new Option('✨ Δημιουργία νέου λογαριασμού',''));Object.entries(accounts).sort((x,y)=>(x[1].classroom||'').localeCompare(y[1].classroom||'','el',{numeric:true})||x[1].name.localeCompare(y[1].name,'el')).forEach(([id,a])=>sel.add(new Option(`${a.name} — ${a.classroom||'Χωρίς τμήμα'}`,id)))}
+function showLogin(){accountChoices();$('accountEnter').textContent='🚀 Κάνε λογαριασμό & ξεκίνα!';$('accountSelect').value='';$('studentName').value='';$('studentName').disabled=false;$('studentClass').value='';$('accountError').textContent='';$('accountOverlay').classList.remove('hidden');$('accountBar').hidden=true}
+function activate(id){activeId=id;$('accountOverlay').classList.add('hidden');$('accountBar').hidden=false;showList();updateProgress()}
+$('accountSelect').addEventListener('change',()=>{const id=$('accountSelect').value;$('accountEnter').textContent=id?'🎯 Συνέχισε τις ασκήσεις σου':'🚀 Κάνε λογαριασμό & ξεκίνα!';$('studentName').value=id?accounts[id].name:'';$('studentName').disabled=!!id;$('studentClass').value=id?(accounts[id].classroom||''):'';});
+$('accountEnter').addEventListener('click',()=>{let id=$('accountSelect').value;if(!id){const classroom=$('studentClass').value;if(!classroom){$('accountError').textContent='Επίλεξε πρώτα τμήμα.';return}const name=$('studentName').value.trim().replace(/\s+/g,' ');if(name.length<2){$('accountError').textContent='Γράψε ένα όνομα τουλάχιστον 2 χαρακτήρων.';return}if(Object.values(accounts).some(a=>a.name.toLocaleLowerCase('el')===name.toLocaleLowerCase('el')&&a.classroom===classroom)){$('accountError').textContent='Υπάρχει ήδη αυτό το όνομα. Επίλεξέ το από τη λίστα.';return}id='s'+Date.now()+'_'+Math.random().toString(36).slice(2,7);accounts[id]={name,classroom,created:new Date().toISOString(),done:{},accentBest:0,paragraphDone:[]};if(!persist()){delete accounts[id];return}}else{const classroom=$('studentClass').value;if(!classroom){$('accountError').textContent='Επίλεξε τμήμα.';return}accounts[id].classroom=classroom;persist()}activate(id)});
+function unlockedPosition(){const done=student()?.done||{};for(let pos=0;pos<DISPLAY_ORDER.length;pos++)if(!done[DISPLAY_ORDER[pos]+1])return pos;return DISPLAY_ORDER.length}
+function canOpen(i){return !!student() && (window.teacherStructurePreview===true || DISPLAY_ORDER.indexOf(i)<=unlockedPosition())}
+function launchExercise(i){document.querySelectorAll(".teacher-preview-banner").forEach(el=>el.remove());if(!canOpen(i)){alert('🔒 Ολοκλήρωσε πρώτα την προηγούμενη άσκηση!');return}hideContinue();if(i===0)startLetterPractice();else if(i===5)startAccentPractice();else if(i===12)startParagraphPractice();else startNewPractice(i)}
+function hideContinue(){document.querySelectorAll('.sequence-continue').forEach(el=>el.hidden=true)}
+function showContinue(i){const pos=DISPLAY_ORDER.indexOf(i);if(pos<0)return;const section=i===0?$('letterPractice'):i===5?$('accentPractice'):i===12?$('paragraphPractice'):$('newPractice');let b=section.querySelector('.sequence-continue');if(!b){b=document.createElement('button');b.type='button';b.className='sequence-continue';section.append(b)}b.hidden=false;if(pos<13){b.textContent=`🌟 Τέλεια! Πάμε στην Άσκηση ${pos+2} →`;b.onclick=()=>launchExercise(DISPLAY_ORDER[pos+1])}else{b.textContent='🏆 Συγχαρητήρια! Ολοκλήρωσες και τις 14 ασκήσεις!';b.onclick=showList}b.scrollIntoView({behavior:'smooth',block:'nearest'})}
+function markDone(i){if(window.teacherStructurePreview===true){alert("Προεπισκόπηση εκπαιδευτικού: η πρόοδος δεν αποθηκεύτηκε.");return}if(!student() || (i<0||i>13))return;student().done[i+1]=student().done[i+1]||new Date().toISOString();persist();updateProgress();render();showContinue(i)}
+function updateProgress(){if(!student())return;const count=Array.from({length:14},(_,i)=>i+1).filter(n=>student().done?.[n]).length;$('studentGreeting').textContent='👤 '+student().name+' · 🏫 '+(student().classroom||'Χωρίς τμήμα');$('totalProgressFill').style.width=(count/14*100)+'%';$('totalProgressText').textContent=`Επαληθευμένες ${count} από τις 14 ασκήσεις (${Math.round(count/14*100)}%)`;}
+$('changeClass').addEventListener('click',()=>{if(!student())return;const old=student().classroom||'';const selected=prompt('Δώσε το τμήμα του μαθητή ('+CLASSROOMS.join(', ')+'):',old);if(selected===null)return;const value=selected.trim().toLocaleUpperCase('el-GR');if(!CLASSROOMS.includes(value)){alert('Επίλεξε έγκυρο τμήμα.');return}student().classroom=value;persist();updateProgress()});
+$('switchAccount').addEventListener('click',()=>{activeId=null;showList();showLogin()});
+$('deleteAccount').addEventListener('click',()=>{if(!student())return;const name=student().name;if(!confirm(`Να διαγραφεί ΟΡΙΣΤΙΚΑ ο λογαριασμός «${name}» και όλη η αποθηκευμένη πρόοδός του;`))return;if(!confirm('Τελική επιβεβαίωση: η διαγραφή δεν μπορεί να αναιρεθεί. Συνέχεια;'))return;delete accounts[activeId];persist();activeId=null;showList();showLogin()});
+// Δημιουργία πραγματικού .xlsx χωρίς εξωτερικές βιβλιοθήκες ή σύνδεση στο διαδίκτυο.
+function xmlEscape(value){return String(value??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;')}
+function zipXlsx(files){
+ const encoder=new TextEncoder(),parts=[],central=[];let offset=0;
+ const table=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let j=0;j<8;j++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);table[n]=c>>>0}
+ function crc32(bytes){let c=0xFFFFFFFF;for(const b of bytes)c=table[(c^b)&255]^(c>>>8);return(c^0xFFFFFFFF)>>>0}
+ function u16(v){return [v&255,(v>>>8)&255]}
+ function u32(v){return [v&255,(v>>>8)&255,(v>>>16)&255,(v>>>24)&255]}
+ for(const [name,contents] of files){const nameBytes=encoder.encode(name),data=encoder.encode(contents),crc=crc32(data),size=data.length;
+  const local=new Uint8Array([...u32(0x04034b50),...u16(20),...u16(0x0800),...u16(0),...u16(0),...u16(0),...u32(crc),...u32(size),...u32(size),...u16(nameBytes.length),...u16(0)]);
+  parts.push(local,nameBytes,data);
+  central.push(new Uint8Array([...u32(0x02014b50),...u16(20),...u16(20),...u16(0x0800),...u16(0),...u16(0),...u16(0),...u32(crc),...u32(size),...u32(size),...u16(nameBytes.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(offset)]),nameBytes);
+  offset+=local.length+nameBytes.length+size;
+ }
+ const centralSize=central.reduce((n,x)=>n+x.length,0);
+ const end=new Uint8Array([...u32(0x06054b50),...u16(0),...u16(0),...u16(files.length),...u16(files.length),...u32(centralSize),...u32(offset),...u16(0)]);
+ return new Blob([...parts,...central,end],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+}
+function excelColumn(n){let result='';for(n++;n;n=Math.floor((n-1)/26))result=String.fromCharCode(65+(n-1)%26)+result;return result}
+function makeExcel(rows){
+ const sheetRows=rows.map((row,r)=>'<row r="'+(r+1)+'">'+row.map((value,c)=>{
+  const ref=excelColumn(c)+(r+1),style=r===0?' s="1"':'';
+  if(typeof value==='number')return '<c r="'+ref+'"'+style+'><v>'+value+'</v></c>';
+  return '<c r="'+ref+'" t="inlineStr"'+style+'><is><t>'+xmlEscape(value)+'</t></is></c>';
+ }).join('')+'</row>').join('');
+ const lastCol=excelColumn(rows[0].length-1);
+ const sheet='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><cols><col min="1" max="1" width="23" customWidth="1"/><col min="2" max="2" width="12" customWidth="1"/><col min="3" max="3" width="37" customWidth="1"/><col min="4" max="4" width="24" customWidth="1"/><col min="5" max="5" width="29" customWidth="1"/><col min="6" max="6" width="26" customWidth="1"/></cols><sheetData>'+sheetRows+'</sheetData><autoFilter ref="A1:'+lastCol+''+rows.length+'"/></worksheet>';
+ const styles='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="2"><font><sz val="11"/><name val="Calibri"/></font><font><b/><color rgb="FFFFFFFF"/><sz val="11"/><name val="Calibri"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF285FCA"/><bgColor indexed="64"/></patternFill></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="2"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="1" borderId="0" xfId="0" applyFont="1" applyFill="1"/></cellXfs></styleSheet>';
+ return zipXlsx([
+  ['[Content_Types].xml','<?xml version="1.0" encoding="UTF-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>'],
+  ['_rels/.rels','<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'],
+  ['xl/workbook.xml','<?xml version="1.0" encoding="UTF-8"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="Πρόοδος μαθητή" sheetId="1" r:id="rId1"/></sheets></workbook>'],
+  ['xl/_rels/workbook.xml.rels','<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>'],
+  ['xl/styles.xml',styles],['xl/worksheets/sheet1.xml',sheet]
+ ]);
+}
+$('exportProgress').addEventListener('click',()=>{
+ if(!student())return;const a=student(),done=a.done||{};
+ const rows=[['Τμήμα','Μαθητής','Άσκηση','Τίτλος','Κατάσταση','Ημερομηνία ολοκλήρωσης']];
+ DISPLAY_ORDER.forEach((i)=>{const ex=exercises[i];rows.push([a.classroom||'Χωρίς τμήμα',a.name,displayNumber(i),ex[1],done[i+1]?'Ολοκληρώθηκε':'Δεν ολοκληρώθηκε',done[i+1]?new Date(done[i+1]).toLocaleString('el-GR'):'']);});
+ rows.push([a.classroom||'Χωρίς τμήμα',a.name,5,'Καλύτερη επίδοση τόνων',`${a.accentBest||0}/20`,'']);
+ rows.push([a.classroom||'Χωρίς τμήμα',a.name,13,'Ολοκληρωμένες παράγραφοι',`${(a.paragraphDone||[]).length}/8`,'']);
+ const blob=makeExcel(rows),url=URL.createObjectURL(blob),link=document.createElement('a');
+ link.href=url;link.download='proodos_pliktrologiou_'+a.name.replace(/[^\p{L}\p{N}_-]+/gu,'_')+'.xlsx';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);
+});
+$('exportAll').addEventListener('click',()=>{
+ const rows=[['Τμήμα','Μαθητής','Άσκηση','Τίτλος','Κατάσταση','Ημερομηνία ολοκλήρωσης']];
+ const all=Object.values(accounts).sort((a,b)=>(CLASSROOMS.indexOf(a.classroom)<0?99:CLASSROOMS.indexOf(a.classroom))-(CLASSROOMS.indexOf(b.classroom)<0?99:CLASSROOMS.indexOf(b.classroom))||a.name.localeCompare(b.name,'el'));
+ for(const a of all){const done=a.done||{};DISPLAY_ORDER.forEach((i)=>{const ex=exercises[i];rows.push([a.classroom||'Χωρίς τμήμα',a.name,displayNumber(i),ex[1],done[i+1]?'Ολοκληρώθηκε':'Δεν ολοκληρώθηκε',done[i+1]?new Date(done[i+1]).toLocaleString('el-GR'):'']);});}
+ const blob=makeExcel(rows),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='proodos_olon_ton_mathiton.xlsx';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);
+});
+
+// Φορητά αντίγραφα ασφαλείας: η εξαγωγή Excel παραμένει μόνο αναφορά.
+const BACKUP_FORMAT='typing_students_backup_v1';
+function downloadBackup(filename, selected){
+ const data={format:BACKUP_FORMAT,version:1,exportedAt:new Date().toISOString(),students:selected};
+ const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'});
+ const url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);
+}
+function safeFilename(s){return String(s).normalize('NFC').replace(/[^\p{L}\p{N}_-]+/gu,'_').slice(0,60)}
+$('backupAll').addEventListener('click',()=>{
+ if(!Object.keys(accounts).length){alert('Δεν υπάρχουν μαθητές για αποθήκευση.');return}
+ downloadBackup('antigrafo_olon_mathiton_'+new Date().toISOString().slice(0,10)+'.json',accounts);
+});
+$('backupStudent').addEventListener('click',()=>{
+ if(!student()){alert('Επίλεξε πρώτα μαθητή.');return}
+ downloadBackup('antigrafo_'+safeFilename(student().name)+'_'+safeFilename(student().classroom||'')+'.json',{[activeId]:student()});
+});
+$('restoreBackup').addEventListener('click',()=>{$('backupFile').value='';$('backupFile').click()});
+function validBackupStudent(a){
+ return a && typeof a==='object' && !Array.isArray(a) && typeof a.name==='string' && a.name.trim().length>=2 && a.name.length<=150 && typeof a.classroom==='string' && CLASSROOMS.includes(a.classroom) && a.done && typeof a.done==='object' && !Array.isArray(a.done) && Object.keys(a.done).every(k=>/^(?:[1-9]|1[0-4])$/.test(k) && typeof a.done[k]==='string' && !Number.isNaN(Date.parse(a.done[k]))) && (a.paragraphDone===undefined || Array.isArray(a.paragraphDone)) && (a.accentBest===undefined || (typeof a.accentBest==='number' && Number.isFinite(a.accentBest)));
+}
+$('backupFile').addEventListener('change',async e=>{
+ const file=e.target.files?.[0];if(!file)return;
+ try{
+  if(file.size>5*1024*1024)throw Error('Το αρχείο είναι πολύ μεγάλο (όριο 5 MB).');
+  const parsed=JSON.parse(await file.text());
+  if(!parsed || parsed.format!==BACKUP_FORMAT || parsed.version!==1 || !parsed.students || typeof parsed.students!=='object' || Array.isArray(parsed.students))throw Error('Δεν είναι συμβατό αντίγραφο ασφαλείας της εφαρμογής.');
+  const incoming=Object.entries(parsed.students);
+  if(!incoming.length)throw Error('Το αντίγραφο δεν περιέχει μαθητές.');
+  if(incoming.length>3000 || incoming.some(([id,a])=>!/^s[\w-]{3,100}$/.test(id) || !validBackupStudent(a)))throw Error('Το αρχείο περιέχει μη έγκυρα δεδομένα μαθητών.');
+  // Η επαναφορά προσθέτει μαθητές χωρίς να σβήνει ποτέ υπάρχοντες.
+  // Ίδιο ID και ίδια ταυτότητα: ένωση ολοκληρωμένων ασκήσεων, κρατώντας την παλαιότερη ημερομηνία.
+  // Ίδιο ID αλλά διαφορετικό όνομα/τμήμα: δημιουργείται νέο ID.
+  const result=JSON.parse(JSON.stringify(accounts));let added=0,updated=0,skipped=0;
+  for(const [sourceId,original] of incoming){
+   const a=JSON.parse(JSON.stringify(original));
+   const same=Object.entries(result).find(([,v])=>v.name.trim().toLocaleLowerCase('el')===a.name.trim().toLocaleLowerCase('el') && v.classroom===a.classroom);
+   const targetId=(result[sourceId] && result[sourceId].name===a.name && result[sourceId].classroom===a.classroom)?sourceId:(same?.[0]||null);
+   if(targetId){
+    const existing=result[targetId];existing.done=existing.done||{};
+    for(const [k,date] of Object.entries(a.done))if(!existing.done[k] || new Date(date)<new Date(existing.done[k]))existing.done[k]=date;
+    existing.accentBest=Math.max(Number(existing.accentBest)||0,Number(a.accentBest)||0);
+    existing.paragraphDone=[...new Set([...(Array.isArray(existing.paragraphDone)?existing.paragraphDone:[]),...(a.paragraphDone||[])])];
+    updated++;
+   }else{
+    let id=sourceId;while(Object.prototype.hasOwnProperty.call(result,id))id='s'+Date.now()+'_'+Math.random().toString(36).slice(2,10);
+    result[id]=a;added++;
+   }
+  }
+  if(!confirm(`Το αρχείο περιέχει ${incoming.length} μαθητές.\nΘα προστεθούν ${added} και θα συγχωνευτεί η πρόοδος ${updated}.\nΔεν θα διαγραφεί κανένας υπάρχων μαθητής.\n\nΝα γίνει η επαναφορά;`))return;
+  const old=accounts;accounts=result;
+  if(!persist()){accounts=old;return}
+  if(activeId && !accounts[activeId])activeId=null;
+  if(activeId){updateProgress();render()}else showLogin();
+  alert(`Η επαναφορά ολοκληρώθηκε!\nΝέοι μαθητές: ${added}\nΕνημερωμένοι μαθητές: ${updated}`);
+ }catch(err){alert('Η επαναφορά δεν έγινε: '+err.message)}finally{$('backupFile').value=''}
+});
+
+const grid=document.querySelector('#grid'),search=document.querySelector('#search'),empty=document.querySelector('#empty');
+function render(){const q=search.value.trim().toLocaleLowerCase('el');grid.replaceChildren();let count=0;DISPLAY_ORDER.forEach((i,position)=>{const [file,title,description,emoji]=exercises[i];if(!(`${position+1} ${title} ${description}`.toLocaleLowerCase('el').includes(q)))return;count++;const article=document.createElement('article');article.className='card';const top=document.createElement('div');top.className='top';const num=document.createElement('span');num.className='number';num.textContent=`Άσκηση ${position+1}`;const em=document.createElement('span');em.className='emoji';em.textContent=emoji;top.append(num,em);const h=document.createElement('h2');h.textContent=title;const p=document.createElement('p');p.textContent=description;const a=document.createElement('a');a.href=i===0?'#letterPractice':i===5?'#accentPractice':i===12?'#paragraphPractice':'#exerciseViewer';a.addEventListener('click',e=>{e.preventDefault();launchExercise(i)});const locked=!canOpen(i);a.textContent=locked?'🔒 Κλειδωμένη άσκηση':'Άνοιγμα άσκησης →';if(locked){a.classList.add('locked-link');a.setAttribute('aria-disabled','true')}a.setAttribute('aria-label',`Άνοιγμα άσκησης ${position+1}: ${title}`);const status=document.createElement('div');status.className='status '+(student()?.done[i+1]?'status-done':'status-pending');status.textContent=student()?.done[i+1]?'✓ Ολοκληρώθηκε':locked?'🔒 Ολοκλήρωσε την προηγούμενη':'○ Έτοιμη για εξάσκηση';article.append(top,h,p,status,a);grid.append(article)});empty.style.display=count?'none':'block'}search.addEventListener('input',render);render();
+const viewer=document.querySelector('#exerciseViewer'),frame=document.querySelector('#exerciseFrame');
+function hideList(){document.querySelector('#grid').style.display='none';document.querySelector('#listToolbar').style.display='none';document.querySelector('#empty').style.display='none'}
+function showList(){hideContinue();$('newPractice').classList.remove('active');viewer.classList.remove('active');frame.removeAttribute('src');accentSection.classList.remove('active');paragraphSection.classList.remove('active');$('letterPractice').classList.remove('active');document.querySelector('#grid').style.display='grid';document.querySelector('#listToolbar').style.display='flex';render();document.querySelector('#listToolbar').scrollIntoView({behavior:'smooth'})}
+function openExercise(i){currentExternal=i;updateProgress();paragraphSection.classList.remove('active');accentSection.classList.remove('active');$('letterPractice').classList.remove('active');hideList();const [file,title]=exercises[i];document.querySelector('#viewerTitle').textContent=`Άσκηση ${displayNumber(i)}: ${title}`;const url=base+file;document.querySelector('#viewerExternal').href=url;frame.title=`Άσκηση ${displayNumber(i)}: ${title}`;frame.src=url;viewer.classList.add('active');viewer.scrollIntoView({behavior:'smooth',block:'start'})}
+document.querySelector('#viewerBack').addEventListener('click',showList);
+
+// Πιστή εκπαιδευτική λογική της αρχικής άσκησης: στόχος → κίτρινο πλήκτρο → πληκτρολόγηση → έλεγχος → επόμενο.
+// Η ολοκλήρωση καταγράφεται ΜΟΝΟ όταν απαντηθούν σωστά και τα 24 γράμματα.
+const letterOrder=['α','ε','η','ι','ο','υ','ω','β','γ','δ','ζ','θ','κ','λ','μ','ν','ξ','π','ρ','σ','τ','φ','χ','ψ'];
+const letterRows=[';ςερτυθιοπ','ασδφγηξκλ','ζχψωβνμ'];
+const letterSection=$('letterPractice');
+let letterIndex=0,letterPassed=false;
+function renderLetterKeyboard(){
+ const host=$('letterKeyboard');host.replaceChildren();const target=letterOrder[letterIndex];
+ for(const row of letterRows){const line=document.createElement('div');line.className='letter-kb-row';for(const char of [...row]){const key=document.createElement('button');key.type='button';key.className='letter-kb-key'+(char===target?' target':'');key.textContent=char.toLocaleUpperCase('el-GR');key.title='Πλήκτρο '+char;key.addEventListener('click',()=>{$('letterAnswer').value=char;$('letterAnswer').focus()});line.append(key)}host.append(line)}
+}
+function renderLetter(){letterPassed=false;$('letterTarget').textContent=letterOrder[letterIndex];$('letterStats').textContent=`Γράμμα ${letterIndex+1} από ${letterOrder.length} · Σωστά: ${letterIndex}`;$('letterProgress').style.width=(letterIndex/letterOrder.length*100)+'%';$('letterAnswer').value='';$('letterAnswer').disabled=false;$('letterCheck').disabled=false;$('letterNext').disabled=true;$('letterNext').textContent=letterIndex===letterOrder.length-1?'🏆 Ολοκλήρωση':'➡️ Επόμενο γράμμα';$('letterFeedback').textContent='⌨️ Γράψε το γράμμα και πάτησε «Έλεγχος». ';$('letterFeedback').className='letter-feedback waiting';$('letterAnswer').classList.remove('is-correct','is-wrong');renderLetterKeyboard()}
+function startLetterPractice(){$('newPractice').classList.remove('active');viewer.classList.remove('active');frame.removeAttribute('src');accentSection.classList.remove('active');paragraphSection.classList.remove('active');hideList();letterSection.classList.add('active');letterIndex=0;renderLetter();letterSection.scrollIntoView({behavior:'smooth',block:'start'});$('letterAnswer').focus()}
+function letterCheck(){
+ if(letterPassed)return;
+ const value=$('letterAnswer').value.trim().normalize('NFC');const target=letterOrder[letterIndex];
+ if(value===target){
+  letterPassed=true;
+  $('letterFeedback').className='letter-feedback success';
+  $('letterFeedback').innerHTML='<span class="letter-feedback-icon" aria-hidden="true">✓</span><span><strong>Τέλεια! Το έγραψες σωστά!</strong><small>Το γράμμα καταχωρίστηκε. Πάτησε «Επόμενο γράμμα» για να συνεχίσεις.</small></span>';
+  $('letterAnswer').classList.add('is-correct');$('letterAnswer').classList.remove('is-wrong');
+  $('letterCheck').disabled=true;$('letterAnswer').disabled=true;$('letterNext').disabled=false;
+ }else{
+  $('letterFeedback').className='letter-feedback error';
+  $('letterFeedback').innerHTML='<span class="letter-feedback-icon" aria-hidden="true">!</span><span><strong>Δοκίμασε ξανά!</strong><small>Κοίτα το κίτρινο πλήκτρο και πληκτρολόγησε το μικρό γράμμα.</small></span>';
+  $('letterAnswer').classList.add('is-wrong');$('letterAnswer').classList.remove('is-correct');
+  $('letterAnswer').focus();$('letterAnswer').select();
+ }
+}
+$('letterCheck').addEventListener('click',letterCheck);
+$('letterAnswer').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();letterPassed?letterNext():letterCheck()}});
+function letterNext(){if(!letterPassed)return;if(letterIndex<letterOrder.length-1){letterIndex++;renderLetter();$('letterAnswer').focus()}else{$('letterProgress').style.width='100%';$('letterStats').textContent='24 από 24 γράμματα · 100%';$('letterFeedback').className='letter-feedback success';$('letterFeedback').innerHTML='<span class="letter-feedback-icon" aria-hidden="true">🏆</span><span><strong>Συγχαρητήρια! Ολοκλήρωσες την Άσκηση 1!</strong><small>Έγραψες σωστά και τα 24 γράμματα. Η πρόοδός σου αποθηκεύτηκε.</small></span>';$('letterNext').disabled=true;markDone(0)}}
+$('letterNext').addEventListener('click',letterNext);
+$('letterRestart').addEventListener('click',()=>{letterIndex=0;renderLetter();$('letterAnswer').focus()});
+$('letterBack').addEventListener('click',showList);
+
+const accentWords=['σχολείο','παιδί','μολύβι','βιβλίο','καρέκλα','παράθυρο','δάσκαλος','μαθήτρια','ποδήλατο','λουλούδι','ήλιος','θάλασσα','οικογένεια','υπολογιστής','πληκτρολόγιο','τετράδιο','παιχνίδι','καλοκαίρι','φίλος','γιορτή'];
+let accentIndex=0,accentCorrect=0,accentChecked=false;
+const accentSection=document.querySelector('#accentPractice'),accentAnswer=document.querySelector('#accentAnswer'),accentFeedback=document.querySelector('#accentFeedback');
+const normalizeGreek=s=>s.normalize('NFC').trim().toLocaleLowerCase('el-GR');
+function accentRender(){
+ document.querySelector('#accentWord').textContent=accentWords[accentIndex];
+ document.querySelector('#accentScore').textContent=`Λέξη ${accentIndex+1} από ${accentWords.length} · Σωστές: ${accentCorrect}`;
+ accentAnswer.value='';accentAnswer.disabled=false;accentAnswer.classList.remove('accent-correct','accent-wrong');
+ accentFeedback.textContent='Γράψε τη λέξη με τον σωστό τόνο και πάτησε «Έλεγχος».';
+ accentFeedback.classList.remove('accent-good','accent-bad');
+ accentChecked=false;
+ document.querySelector('#accentCheck').disabled=false;
+ document.querySelector('#accentNext').disabled=true;
+ document.querySelector('#accentNext').textContent=accentIndex===accentWords.length-1?'Ολοκλήρωση ✓':'➡️ Επόμενη λέξη';
+}
+function startAccentPractice(){$('newPractice').classList.remove('active');$('letterPractice').classList.remove('active');paragraphSection.classList.remove('active');viewer.classList.remove('active');frame.removeAttribute('src');accentSection.classList.add('active');document.querySelector('#grid').style.display='none';document.querySelector('#listToolbar').style.display='none';document.querySelector('#empty').style.display='none';accentIndex=0;accentCorrect=0;accentRender();accentSection.scrollIntoView({behavior:'smooth',block:'start'});accentAnswer.focus()}
+function accentCheck(){
+ if(accentChecked)return;
+ const typed=accentAnswer.value.trim();
+ if(!typed){accentFeedback.textContent='Γράψε πρώτα τη λέξη!';accentAnswer.focus();return}
+ const correct=normalizeGreek(typed)===normalizeGreek(accentWords[accentIndex]);
+ accentAnswer.classList.toggle('accent-correct',correct);
+ accentAnswer.classList.toggle('accent-wrong',!correct);
+ accentFeedback.classList.toggle('accent-good',correct);
+ accentFeedback.classList.toggle('accent-bad',!correct);
+ if(correct){
+  accentChecked=true;accentCorrect++;
+  accentFeedback.textContent='🌟 Μπράβο! Σωστή λέξη και σωστός τόνος! Πάτησε «Επόμενη λέξη».';
+  document.querySelector('#accentCheck').disabled=true;
+  document.querySelector('#accentNext').disabled=false;
+  accentAnswer.disabled=true;
+ }else{
+  accentFeedback.textContent='🔎 Δοκίμασε ξανά! Πρόσεξε τα γράμματα και τον τόνο.';
+  accentAnswer.focus();accentAnswer.select();
+ }
+ document.querySelector('#accentScore').textContent=`Λέξη ${accentIndex+1} από ${accentWords.length} · Σωστές: ${accentCorrect}`;
+}
+document.querySelector('#accentCheck').addEventListener('click',accentCheck);
+accentAnswer.addEventListener('input',()=>{if(!accentChecked){accentAnswer.classList.remove('accent-wrong');accentFeedback.classList.remove('accent-bad')}});
+accentAnswer.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();accentChecked?accentNext():accentCheck()}});
+function accentNext(){
+ if(!accentChecked)return;
+ if(accentIndex<accentWords.length-1){accentIndex++;accentRender();accentAnswer.focus()}
+ else{
+  if(student()){student().accentBest=Math.max(student().accentBest||0,accentCorrect);markDone(5)}
+  accentFeedback.textContent='🏆 Συγχαρητήρια! Ολοκλήρωσες και τις 20 λέξεις με σωστό τόνο! Η πρόοδός σου αποθηκεύτηκε.';
+  accentFeedback.classList.add('accent-good');
+  document.querySelector('#accentNext').disabled=true;
+ }
+}
+document.querySelector('#accentNext').addEventListener('click',accentNext);
+document.querySelector('#accentRestart').addEventListener('click',()=>{accentIndex=0;accentCorrect=0;document.querySelector('#accentNext').disabled=false;accentRender();accentAnswer.focus()});
+document.querySelector('#backToList').addEventListener('click',showList);
+
+
+// Άσκηση 13: αυτόνομη εξάσκηση παραγράφων, χωρίς εξωτερικό σύνδεσμο.
+const paragraphs=[
+'Το πρωί ξυπνάω νωρίς και ετοιμάζω την τσάντα μου. Παίρνω τα βιβλία και τα τετράδιά μου. Ύστερα πηγαίνω στο σχολείο με χαμόγελο.',
+'Στην αυλή του σχολείου παίζουμε με τους φίλους μας. Μοιραζόμαστε τις μπάλες και σεβόμαστε τους κανόνες. Όταν χτυπήσει το κουδούνι, μπαίνουμε ήρεμα στην τάξη.',
+'Ο υπολογιστής είναι ένα χρήσιμο εργαλείο. Με το πληκτρολόγιο γράφουμε κείμενα και με το ποντίκι επιλέγουμε αντικείμενα. Πρέπει να τον χρησιμοποιούμε με προσοχή.',
+'Το Σάββατο πήγαμε μια βόλτα στο πάρκο. Είδαμε ψηλά δέντρα, πολύχρωμα λουλούδια και μικρά πουλιά. Καθίσαμε σε ένα παγκάκι και απολαύσαμε τον καθαρό αέρα.',
+'Η Μαρία αγαπάει τα βιβλία. Κάθε απόγευμα διαβάζει μια μικρή ιστορία και σημειώνει τις αγαπημένες της λέξεις. Μερικές φορές γράφει και τις δικές της περιπέτειες.',
+'Στο μάθημα της Πληροφορικής μαθαίνουμε να γράφουμε σωστά. Χρησιμοποιούμε το Enter για νέα γραμμή και το Backspace για να διορθώνουμε λάθη. Δεν ξεχνάμε τους τόνους!',
+'Η Γη κινείται γύρω από τον Ήλιο. Η Σελήνη είναι ο φυσικός δορυφόρος της Γης και φωτίζεται από τον Ήλιο. Στο διάστημα υπάρχουν αμέτρητα αστέρια και πλανήτες.',
+'Η τεχνολογία μάς βοηθά να μαθαίνουμε και να δημιουργούμε. Στο διαδίκτυο προσέχουμε τα προσωπικά μας στοιχεία και μιλάμε σε έναν έμπιστο ενήλικα όταν κάτι μας ανησυχεί. Η ασφάλεια είναι σημαντική για όλους.'
+];
+const paragraphSection=document.querySelector('#paragraphPractice');
+const paragraphInput=document.querySelector('#paragraphInput');
+const paragraphFeedback=document.querySelector('#paragraphFeedback');
+let paragraphIndex=0,paragraphCompleted=new Set();
+function paragraphNormalized(t){return t.normalize('NFC').replace(/\s+/g,' ').trim()}
+function paragraphRender(){
+ document.querySelector('#paragraphTarget').textContent=paragraphs[paragraphIndex];
+ document.querySelector('#paragraphLevel').textContent=`Παράγραφος ${paragraphIndex+1}/${paragraphs.length}`;
+ document.querySelector('#paragraphScore').textContent=`Ολοκληρωμένες: ${paragraphCompleted.size}`;
+ paragraphInput.value='';paragraphInput.classList.remove('paragraph-correct','paragraph-wrong');paragraphInput.readOnly=false;paragraphFeedback.textContent='';paragraphFeedback.className='feedback';
+ document.querySelector('#paragraphNext').disabled=true;document.querySelector('#paragraphCheck').disabled=false;
+ paragraphProgress();
+}
+function paragraphProgress(){
+ const target=paragraphNormalized(paragraphs[paragraphIndex]);const value=paragraphNormalized(paragraphInput.value);
+ let same=0;for(let i=0;i<Math.min(target.length,value.length);i++){if(target[i]===value[i])same++}
+ document.querySelector('#paragraphProgress').textContent=`Πρόοδος: ${Math.min(100,Math.round(100*same/target.length))}%`;
+}
+function startParagraphPractice(){$('newPractice').classList.remove('active');$('letterPractice').classList.remove('active');viewer.classList.remove('active');frame.removeAttribute('src');accentSection.classList.remove('active');hideList();paragraphSection.classList.add('active');paragraphIndex=0;paragraphCompleted=new Set(student()?.paragraphDone||[]);paragraphRender();paragraphSection.scrollIntoView({behavior:'smooth',block:'start'});paragraphInput.focus()}
+function paragraphCheck(){const target=paragraphNormalized(paragraphs[paragraphIndex]);const typed=paragraphNormalized(paragraphInput.value);
+ if(!typed){paragraphInput.classList.add('paragraph-wrong');paragraphInput.classList.remove('paragraph-correct');paragraphFeedback.textContent='Γράψε πρώτα την παράγραφο.';paragraphFeedback.className='feedback bad';return}
+ if(typed===target){paragraphInput.classList.remove('paragraph-wrong');paragraphInput.classList.add('paragraph-correct');paragraphInput.readOnly=true;paragraphCompleted.add(paragraphIndex);if(student()){student().paragraphDone=[...paragraphCompleted].sort((a,b)=>a-b);if(paragraphCompleted.size===paragraphs.length)markDone(12);else persist()}paragraphFeedback.textContent='🌟 Μπράβο! Πληκτρολόγησες σωστά ολόκληρη την παράγραφο.';paragraphFeedback.className='feedback good';document.querySelector('#paragraphNext').disabled=false;document.querySelector('#paragraphCheck').disabled=true;document.querySelector('#paragraphScore').textContent=`Ολοκληρωμένες: ${paragraphCompleted.size}`;document.querySelector('#paragraphProgress').textContent='Πρόοδος: 100%';if(paragraphIndex===paragraphs.length-1){paragraphFeedback.textContent='🏆 Συγχαρητήρια! Ολοκλήρωσες και τις 8 παραγράφους!';document.querySelector('#paragraphNext').textContent='Από την αρχή ↻'}else{document.querySelector('#paragraphNext').textContent='➡️ Επόμενη παράγραφος'}}
+ else {paragraphInput.classList.remove('paragraph-correct');paragraphInput.classList.add('paragraph-wrong');let pos=0;while(pos<typed.length&&pos<target.length&&typed[pos]===target[pos])pos++;paragraphFeedback.textContent=`🔎 Υπάρχει διαφορά κοντά στον χαρακτήρα ${pos+1}. Έλεγξε τόνους, γράμματα και σημεία στίξης και δοκίμασε ξανά.`;paragraphFeedback.className='feedback bad';paragraphInput.focus()}
+}
+paragraphInput.addEventListener('input',()=>{paragraphInput.classList.remove('paragraph-wrong');paragraphProgress();if(!document.querySelector('#paragraphCheck').disabled){paragraphFeedback.textContent='';paragraphFeedback.className='feedback'}});
+document.querySelector('#paragraphCheck').addEventListener('click',paragraphCheck);
+document.querySelector('#paragraphNext').addEventListener('click',()=>{if(paragraphIndex===paragraphs.length-1){paragraphIndex=0;paragraphCompleted=new Set(student()?.paragraphDone||[])}else paragraphIndex++;paragraphRender();paragraphInput.focus()});
+document.querySelector('#paragraphRetry').addEventListener('click',()=>{if(paragraphInput.readOnly)return;paragraphInput.classList.remove('paragraph-correct','paragraph-wrong');paragraphInput.value='';paragraphFeedback.textContent='';paragraphFeedback.className='feedback';paragraphProgress();paragraphInput.focus()});
+document.querySelector('#paragraphBack').addEventListener('click',showList);
+
+// Πρωτότυπες εκπαιδευτικές ασκήσεις με πραγματικό έλεγχο κάθε βήματος.
+const npData={
+1:{hint:'🍎 Μέτρησε τα φρούτα που βλέπεις και γράψε πόσα είναι. Μη βιάζεσαι!',keys:'1234567890',tasks:[['🍎',3],['🍌',5],['🍓',2],['🍊',7],['🍐',4],['🍒',6],['🍇',8],['🍉',1],['🍋',9],['🥝',10],['🍎',6],['🍓',4],['🍌',8],['🍐',7],['🍊',10]]},
+2:{hint:'␣ Πάτησε Space ανάμεσα στις λέξεις. Πρόσεξε να υπάρχει ακριβώς ένα κενό.',keys:'SPACE',tasks:['ένα δύο','μαμά μπαμπάς','το μικρό γατάκι','ένα όμορφο λουλούδι','πάμε στο σχολείο','ο ήλιος λάμπει','γράφω με το πληκτρολόγιο','ένα δύο τρία τέσσερα']},
+3:{hint:'🪄 Ο Μαγικός Σβηστήρας: 3 επίπεδα! Σβήσε τα περιττά γράμματα με το πραγματικό Backspace. Στο τρίτο επίπεδο θα γράψεις πρώτα εσύ μια λέξη και θα διορθώσεις το λάθος.',keys:'⌫ BACKSPACE',tasks:[
+{level:1,initial:'μήλοο',answer:'μήλο',deletes:1},{level:1,initial:'γάταα',answer:'γάτα',deletes:1},{level:1,initial:'σπίτιι',answer:'σπίτι',deletes:1},{level:1,initial:'νερόο',answer:'νερό',deletes:1},
+{level:2,initial:'βιβλίοοο',answer:'βιβλίο',deletes:2},{level:2,initial:'σχολείοοοο',answer:'σχολείο',deletes:3},{level:2,initial:'λουλούδιιι',answer:'λουλούδι',deletes:2},{level:2,initial:'παιχνίδιιιι',answer:'παιχνίδι',deletes:3},
+{level:3,initial:'καλημέραα',answer:'καλημέρα',deletes:1},{level:3,initial:'ο ήλιος λάμπειι',answer:'ο ήλιος λάμπει',deletes:1},{level:3,initial:'πάμε στο σχολείοοο',answer:'πάμε στο σχολείο',deletes:2},{level:3,initial:'μαθαίνω πληκτρολόγησηη',answer:'μαθαίνω πληκτρολόγηση',deletes:1}
+]},
+
+4:{hint:'⇧ Γράψε ακριβώς τα ΚΕΦΑΛΑΙΑ που βλέπεις. Χρησιμοποίησε Caps Lock ή Shift.',keys:'CAPS LOCK ⇧',tasks:['Α','Μ','Σ','Κ','Λ','Ν','ΠΑ','ΜΑΜΑ','ΣΧΟΛΕΙΟ','ΕΛΛΑΔΑ']},
+6:{hint:'↵ Για αλλαγή γραμμής πάτησε Enter. Κάθε πρόταση πρέπει να βρίσκεται σε δική της γραμμή.',keys:'ENTER ↵',tasks:['Γεια σου!\nΤι κάνεις;','Ένα\nΔύο\nΤρία','Πρωί\nΜεσημέρι\nΒράδυ','Μου αρέσει το σχολείο.\nΜαθαίνω πληκτρολόγηση.','Ο ήλιος λάμπει.\nΤα πουλιά τραγουδούν.']},
+7:{hint:'💬 Αντίγραψε την πρόταση. Πρόσεξε κεφαλαίο στην αρχή, τόνους, κενά και τελεία.',keys:'SPACE .',tasks:['Η Άννα παίζει.','Ο Νίκος διαβάζει ένα βιβλίο.','Σήμερα έχει όμορφο καιρό.','Το μικρό παιδί πηγαίνει σχολείο.','Μου αρέσει να μαθαίνω καινούρια πράγματα.','Κάθε μέρα εξασκούμαι στο πληκτρολόγιο.','Η Μαρία και ο Πέτρος παίζουν στην αυλή.','Προσέχω τους τόνους και τα σημεία στίξης.']},
+8:{hint:'🌐 Εναλλάσσουμε ελληνικά και αγγλικά. Στα Windows μπορείς να χρησιμοποιήσεις Win + Space.',keys:'ΕΛ / EN',tasks:['cat','dog','school','hello','γάτα','σπίτι','Hello Μαρία','I love Ελλάδα','computer υπολογιστής','Hello! Καλημέρα!']},
+9:{hint:'✨ Γράψε ακριβώς το σύμβολο που βλέπεις. Κάποια σύμβολα χρειάζονται Shift.',keys:'. , ! ? : ;',tasks:['.','!','?',',',':',';','...','Γεια!','Τι κάνεις;','Ναι, φυσικά!']},
+10:{hint:'🔣 Πρόσεξε τα ειδικά σύμβολα. Χρησιμοποίησε Shift όπου χρειάζεται.',keys:'@ # $ % & ( )',tasks:['@','#','$','%','&','(',')','@school','#2026','(1)','50%','A&B']},
+11:{hint:'➕ Γράψε τις μαθηματικές πράξεις και τα σύμβολα ακριβώς όπως φαίνονται.',keys:'+ - * / =',tasks:['1+2=3','5-2=3','2*3=6','8/2=4','10+5=15','9-4=5','3*4=12','20/5=4','7+8=15','100-25=75']},
+13:{hint:'📝 Αντίγραψε το κείμενο ακριβώς. Πρόσεξε αλλαγές γραμμής, τόνους, σύμβολα και αγγλικές λέξεις.',keys:'ENTER SPACE ⇧',tasks:['Το σχολείο μας\nΚάθε πρωί πηγαίνω στο σχολείο.\nΕκεί μαθαίνω νέα πράγματα.','Η τεχνολογία\nΟ υπολογιστής μας βοηθά να γράφουμε.\nΜαθαίνουμε να χρησιμοποιούμε το keyboard.','Μια όμορφη μέρα\nΣήμερα ο ήλιος λάμπει!\nΘα πάμε βόλτα στις 5:00.','Μαθαίνω πληκτρολόγηση\nΓράφω ελληνικά και English.\nΠροσέχω: τόνους, κενά και Enter.']}
+};
+let npExercise=-1,npIndex=0,npPassed=false,npBackspaceUsed=false,npSeeded=false,npDeleteCount=0;
+const np=id=>document.getElementById(id);
+function startNewPractice(i){if(!npData[i])return;npExercise=i;npIndex=0;npPassed=false;npBackspaceUsed=false;npSeeded=false;viewer.classList.remove('active');frame.removeAttribute('src');accentSection.classList.remove('active');paragraphSection.classList.remove('active');letterSection.classList.remove('active');hideList();np('newPractice').classList.add('active');np('npTitle').textContent=`${exercises[i][3]} Άσκηση ${i+1}: ${exercises[i][1]}`;np('npDescription').textContent=exercises[i][2];np('npHelp').textContent=npData[i].hint;np('newPractice').scrollIntoView({behavior:'smooth',block:'start'});npRender()}
+function npRender(){const d=npData[npExercise],task=d.tasks[npIndex],target=npExercise===3?task.answer:Array.isArray(task)?task[1]:task;npPassed=false;npBackspaceUsed=false;npSeeded=false;npDeleteCount=0;if(npExercise===3&&task.level<3)npSeeded=true;np('npCount').textContent=`Βήμα ${npIndex+1} από ${d.tasks.length}`;np('npProgress').style.width=(npIndex/d.tasks.length*100)+'%';np('npTarget').textContent=npExercise===3?task.initial:target;if(npExercise===1){np('npTarget').textContent='';np('npTarget').classList.add('fruit-target');np('npTarget').setAttribute('aria-label','Μέτρησε τα φρούτα');const group=document.createElement('div');group.className='fruit-grid';for(let j=0;j<task[1];j++){const fruit=document.createElement('span');fruit.textContent=task[0];fruit.setAttribute('aria-hidden','true');group.append(fruit)}np('npTarget').append(group)}else{np('npTarget').classList.remove('fruit-target');np('npTarget').removeAttribute('aria-label')}np('npAnswer').value=npExercise===3&&task.level<3?task.initial:'';np('npAnswer').disabled=false;np('npAnswer').readOnly=false;np('npAnswer').className='np-input';np('npCheck').disabled=false;np('npNext').disabled=true;np('npNext').textContent=npIndex===d.tasks.length-1?'🏆 Ολοκλήρωση':'➡️ Επόμενο';np('npFeedback').textContent='⌨️ Γράψε την απάντηση και πάτησε «Έλεγχος».';np('npFeedback').className='np-feedback';np('npKeys').replaceChildren();for(const key of d.keys.split(' ')){const el=document.createElement('span');el.className='np-key lit';el.textContent=key;np('npKeys').append(el)}if(npExercise===3){const levels=['','🟢 Επίπεδο 1 · Σβήνω 1 γράμμα','🟠 Επίπεδο 2 · Σβήνω 2–3 γράμματα','🔵 Επίπεδο 3 · Γράφω και διορθώνω'];np('npHelp').textContent=`${levels[task.level]} — ${task.level===3?'Πληκτρολόγησε πρώτα ακριβώς το κείμενο που βλέπεις και μετά σβήσε τα περιττά γράμματα με Backspace.':'Πάτησε Backspace '+task.deletes+' φορά/φορές για να σβήσεις τα περιττά γράμματα.'}`;np('npFeedback').textContent=task.level===3?'Πρώτα πληκτρολόγησε το κείμενο με το λάθος.':'Πάτησε Backspace για να διορθώσεις τη λέξη.'}np('npAnswer').rows=(npExercise===13||npExercise===6)?3:1;np('npAnswer').focus()}
+function npCheck(){if(npPassed)return;const task=npData[npExercise].tasks[npIndex],target=npExercise===3?task.answer:Array.isArray(task)?task[1]:task,typed=np('npAnswer').value.normalize('NFC'),expected=String(target).normalize('NFC');if(!typed){npFeedback(false,'Γράψε πρώτα την απάντηση.');return}if(typed!==expected){let n=0;while(n<typed.length&&n<expected.length&&typed[n]===expected[n])n++;npFeedback(false,`Δοκίμασε ξανά! Έλεγξε τον χαρακτήρα ${n+1}, τα κενά, τους τόνους και τη στίξη.`);return}if(npExercise===3&&(!npSeeded||npDeleteCount!==task.deletes)){npFeedback(false,'Χρησιμοποίησε το πραγματικό Backspace για να σβήσεις όλα τα περιττά γράμματα.');return}npPassed=true;np('npCheck').disabled=true;np('npNext').disabled=false;np('npAnswer').classList.add('correct');npFeedback(true,npExercise===3?'🪄 Τέλεια! Έσβησες σωστά το περιττό γράμμα! Συνέχισε.':npExercise===1?'🌟 Μπράβο! Μέτρησες σωστά τα φρούτα! Πάτησε «Επόμενο».':'🌟 Μπράβο! Το έγραψες σωστά! Πάτησε «Επόμενο» για να συνεχίσεις.')}
+function npFeedback(ok,msg){np('npFeedback').textContent=msg;np('npFeedback').className='np-feedback '+(ok?'good':'bad');np('npAnswer').classList.toggle('wrong',!ok)}
+np('npCheck').addEventListener('click',npCheck);
+np('npAnswer').addEventListener('keydown',e=>{if(npExercise===3){const task=npData[3].tasks[npIndex];if(npPassed){if(e.key!=='Tab')e.preventDefault();return}if(e.key==='Backspace'){e.preventDefault();if(task.level===3&&!npSeeded){npFeedback(false,'Πρώτα γράψε ολόκληρο το κείμενο με το λάθος.');return}if(npDeleteCount<task.deletes&&np('npAnswer').value.length){np('npAnswer').value=np('npAnswer').value.slice(0,-1);npDeleteCount++;npBackspaceUsed=true;np('npFeedback').textContent=`⌫ Έσβησες ${npDeleteCount} από ${task.deletes} περιττά γράμματα. ${npDeleteCount===task.deletes?'Πάτησε «Έλεγχος»!':'Συνέχισε!'}`;np('npFeedback').className='np-feedback';}return}if(task.level<3||npSeeded){if(e.key!=='Tab'&&e.key!=='Enter')e.preventDefault();if(e.key==='Enter'){e.preventDefault();npCheck()}return}if(e.key==='Enter'){e.preventDefault();return}}if(e.key==='Enter'&&npExercise!==6&&npExercise!==13){e.preventDefault();npCheck()}});
+np('npAnswer').addEventListener('input',()=>{if(npExercise===3){const task=npData[3].tasks[npIndex];if(task.level===3){if(np('npAnswer').value===task.initial){npSeeded=true;np('npFeedback').textContent='✨ Ωραία! Τώρα πάτησε Backspace για να σβήσεις τα περιττά γράμματα.';return}if(!task.initial.startsWith(np('npAnswer').value)){np('npAnswer').value='';npFeedback(false,'Γράψε πρώτα ακριβώς το κείμενο που εμφανίζεται.');return}}else npSeeded=true;return}if(!npPassed){np('npAnswer').classList.remove('wrong');np('npFeedback').className='np-feedback';np('npFeedback').textContent='Συνέχισε την πληκτρολόγηση και πάτησε «Έλεγχος».'}});
+np('npNext').addEventListener('click',()=>{if(!npPassed)return;const d=npData[npExercise];if(npIndex<d.tasks.length-1){npIndex++;npRender()}else{markDone(npExercise);np('npProgress').style.width='100%';np('npCount').textContent=`${d.tasks.length}/${d.tasks.length} · 100%`;np('npFeedback').textContent='🏆 Συγχαρητήρια! Ολοκλήρωσες σωστά όλα τα βήματα! Η πρόοδός σου αποθηκεύτηκε.';np('npFeedback').className='np-feedback good';np('npNext').disabled=true;np('npAnswer').disabled=true}});
+np('npRestart').addEventListener('click',()=>{npIndex=0;npRender()});np('npBack').addEventListener('click',showList);
+
+showLogin();
+</script><script id="teacher-pin-js">
+(function(){
+const toggle=document.getElementById('teacherToggle'), panel=document.getElementById('teacherActions'),help=document.getElementById('accountHelp');
+const key='keyboard_teacher_pin_v1';let unlocked=false;
+function currentPin(){try{return localStorage.getItem(key)}catch(e){return null}}
+function choosePin(){
+ const first=prompt('Πρώτη είσοδος εκπαιδευτικού — διάλεξε το δικό σου PIN (4 έως 8 ψηφία):');
+ if(first===null)return false;
+ if(!/^\d{4,8}$/.test(first)){alert('Το PIN πρέπει να αποτελείται από 4 έως 8 ψηφία.');return false}
+ const again=prompt('Επιβεβαίωσε το νέο PIN:');
+ if(again===null)return false;
+ if(first!==again){alert('Τα δύο PIN δεν ταιριάζουν. Δοκίμασε ξανά.');return false}
+ try{localStorage.setItem(key,first);return true}catch(e){alert('Δεν ήταν δυνατή η αποθήκευση του PIN σε αυτόν τον browser.');return false}
+}
+function closePanel(){window.teacherStructurePreview=false;document.getElementById('teacherStructure').hidden=true;unlocked=false;panel.hidden=true;help.hidden=true;toggle.textContent='🔐 Εκπαιδευτικός'}
+toggle.addEventListener('click',()=>{if(unlocked){closePanel();return}if(!currentPin()&&!choosePin())return;const input=prompt('Λειτουργία εκπαιδευτικού — πληκτρολόγησε το PIN σου:');if(input===null)return;if(input!==currentPin()){alert('Λάθος PIN.');return}unlocked=true;panel.hidden=false;help.hidden=false;toggle.textContent='🔒 Κλείσιμο εκπαιδευτικού'});
+const structureBtn=document.createElement('button');structureBtn.type='button';structureBtn.className='secondary';structureBtn.textContent='🧩 Έλεγχος δομής 14 ασκήσεων';panel.appendChild(structureBtn);
+const structure=document.createElement('div');structure.id='teacherStructure';structure.className='teacher-structure';structure.hidden=true;panel.after(structure);
+structureBtn.addEventListener('click',()=>{if(!unlocked)return;structure.hidden=!structure.hidden;if(structure.hidden){window.teacherStructurePreview=false;return}structure.replaceChildren();const title=document.createElement('h3');title.textContent='Δομή ασκήσεων · Προεπισκόπηση εκπαιδευτικού';structure.append(title);const note=document.createElement('p');note.textContent='Προβολή κάθε άσκησης χωρίς ξεκλείδωμα μαθητή. Κατά την προεπισκόπηση δεν καταγράφονται ολοκληρώσεις. Η σειρά μαθητή παραμένει υποχρεωτική.';structure.append(note);const table=document.createElement('table');const header=document.createElement('tr');for(const label of ['Σειρά','Άσκηση','Βήματα','Έλεγχος']){const th=document.createElement('th');th.textContent=label;header.append(th)}table.append(header);for(let pos=0;pos<DISPLAY_ORDER.length;pos++){const i=DISPLAY_ORDER[pos],tr=document.createElement('tr');for(const val of [String(pos+1),exercises[i][1],i===0?'24 γράμματα':i===5?'20 λέξεις':i===12?'8 παράγραφοι':String(npData[i]?.tasks.length||'—')]){const td=document.createElement('td');td.textContent=val;tr.append(td)}const td=document.createElement('td'),b=document.createElement('button');b.type='button';b.textContent='👁 Προβολή';b.addEventListener('click',()=>{window.teacherStructurePreview=true;launchExercise(i);const active=document.querySelector('#letterPractice.active,#accentPractice.active,#paragraphPractice.active,#newPractice.active');if(active&&!active.querySelector('.teacher-preview-banner')){const banner=document.createElement('div');banner.className='teacher-preview-banner';banner.textContent='👁 Προεπισκόπηση εκπαιδευτικού · Δεν αποθηκεύεται πρόοδος';active.prepend(banner)}});td.append(b);tr.append(td);table.append(tr)}structure.append(table)});
+const change=document.createElement('button');change.type='button';change.className='secondary';change.textContent='🔑 Αλλαγή PIN';panel.appendChild(change);
+change.addEventListener('click',()=>{if(!unlocked)return;const old=prompt('Πληκτρολόγησε το τωρινό PIN:');if(old===null)return;if(old!==currentPin()){alert('Λάθος τωρινό PIN.');return}const next=prompt('Νέο PIN (4 έως 8 ψηφία):');if(next===null)return;if(!/^\d{4,8}$/.test(next)){alert('Το PIN πρέπει να έχει 4–8 ψηφία.');return}const confirmPin=prompt('Επιβεβαίωσε το νέο PIN:');if(confirmPin===null)return;if(confirmPin!==next){alert('Τα PIN δεν ταιριάζουν.');return}try{localStorage.setItem(key,next);alert('Το PIN άλλαξε.')}catch(e){alert('Δεν ήταν δυνατή η αποθήκευση του PIN.')}});
+})();
+</script></body></html>
